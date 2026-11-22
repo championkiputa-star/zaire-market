@@ -1,0 +1,11 @@
+# ===================================================================
+# ZAÏRE-MARKET — Fichier d'indexation pour Google, Bing & Moteurs
+# ===================================================================
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /config/
+Disallow: /scratch/
+
+# Sitemap Officiel pour exploration rapide par Google
+Sitemap: https://zaire-market.onrender.com/sitemap.xml

@@ -3,7 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Zaïre-Market — La 1ère Marketplace Congolaise</title>
+  <title>Zaïre-Market — 1ère Marketplace Congolaise | Acheter & Vendre en RDC</title>
+
+  <!-- Référencement Naturel Google & Moteurs de Recherche (SEO) -->
+  <meta name="description" content="Zaïre-Market : la 1ère marketplace en RDC. Achetez et vendez facilement à Kinshasa, Lubumbashi, Goma, Bukavu, Kisangani et dans les 26 provinces. Paiement sécurisé Mobile Money (M-Pesa, Airtel, Orange) et livraison rapide.">
+  <meta name="keywords" content="Zaïre-Market, zaire market, marketplace RDC, commerce en ligne Congo, acheter en RDC, vendre à Kinshasa, Lubumbashi, Goma, Bukavu, Kisangani, Mobile Money, M-Pesa, Airtel Money, Orange Money, e-commerce Congo, Champion Kiputa">
+  <meta name="author" content="Champion Kiputa">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://zaire-market.onrender.com/">
+
+  <!-- Balises Réseaux Sociaux & Partage (Open Graph Facebook, WhatsApp, LinkedIn) -->
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Zaïre-Market — Le Plus Grand Marché Numérique de la RDC">
+  <meta property="og:description" content="Achetez, vendez et expédiez en toute confiance dans les 26 provinces de la RDC. Produits certifiés et paiement Mobile Money garanti.">
+  <meta property="og:url" content="https://zaire-market.onrender.com/">
+  <meta property="og:site_name" content="Zaïre-Market">
+  <meta property="og:image" content="https://zaire-market.onrender.com/assets/images/logo.jpg">
+  <meta property="og:image:width" content="600">
+  <meta property="og:image:height" content="600">
+
+  <!-- Balises Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Zaïre-Market — 1ère Marketplace Congolaise">
+  <meta name="twitter:description" content="Achetez et vendez en RDC en toute confiance avec livraison provinciale et Mobile Money.">
+  <meta name="twitter:image" content="https://zaire-market.onrender.com/assets/images/logo.jpg">
+
+  <!-- Données Structurées JSON-LD pour Google Rich Snippets -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Zaïre-Market",
+    "url": "https://zaire-market.onrender.com/",
+    "description": "La 1ère marketplace en République Démocratique du Congo pour acheter et vendre dans les 26 provinces.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://zaire-market.onrender.com/#products?search={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
 
   <!-- Font-Awesome 6.7.2 Local & CDN Cloud -->
   <link rel="stylesheet" href="fontawesome-free-6.7.2-web/css/all.min.css">
