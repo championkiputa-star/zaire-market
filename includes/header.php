@@ -51,7 +51,7 @@
 
   <!-- Feuilles de Style Modulaires Zaïre-Market -->
   <link rel="stylesheet" href="assets/css/style.css?v=2026.17">
-  <link rel="stylesheet" href="assets/css/header-nav.css?v=2026.18">
+  <link rel="stylesheet" href="assets/css/header-nav.css?v=2026.19">
   <link rel="stylesheet" href="assets/css/categories.css?v=2026.17">
   <link rel="stylesheet" href="assets/css/products.css?v=2026.17">
   <link rel="stylesheet" href="assets/css/cart-checkout.css?v=2026.17">
