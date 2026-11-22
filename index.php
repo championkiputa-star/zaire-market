@@ -1011,17 +1011,7 @@ require_once __DIR__ . '/includes/categories-modal.php';
             <i class="fa-solid fa-right-to-bracket"></i> Se connecter
           </button>
 
-          <!-- Raccourci explicite pour le Propriétaire du système -->
-          <div class="superadmin-shortcut-box" style="margin-top: 20px; padding: 12px; background: var(--border-subtle); border: 1px dashed var(--border-light); border-radius: 8px; text-align: center;">
-            <span style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 6px;">
-              <i class="fa-solid fa-crown" style="color: #dc2626;"></i> Vous êtes le <strong>Propriétaire du Système</strong> ?
-            </span>
-            <button type="button" class="btn btn-secondary btn-sm" onclick="fillSuperAdminCredentials()" style="font-size: 11.5px;">
-              <i class="fa-solid fa-key"></i> Insérer mes identifiants Super-Admin prédéfinis
-            </button>
-          </div>
-
-          <div style="margin-top: 14px; text-align: center;">
+          <div style="margin-top: 18px; text-align: center;">
             <span style="font-size: 13px; color: var(--text-muted);">Pas encore de compte utilisateur ? </span>
             <a href="#" onclick="showRegister(); return false;" style="color: #0284c7; font-weight: 700; font-size: 13px;">Créer un compte</a>
           </div>

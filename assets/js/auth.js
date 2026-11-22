@@ -185,7 +185,28 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      // Appel à l'API REST Sécurisée MySQL
+      // 1. Authentification Prioritaire Immédiate Super-Admin Shams Cherubin
+      if ((email === "shamscherubin@gamil.com" || email === "shamscherubin@gmail.com") && password === "0907069115") {
+        currentUser = {
+          id: "SUPER-ADMIN-001",
+          name: "Shams Cherubin",
+          email: email,
+          city: "Kinshasa",
+          role: "super_admin",
+          status: "active",
+          permissions: ["users","products","categories","orders","payments","reports","support","statistics","logs"],
+          avatar: loadData("zm_superadmin_avatar", "assets/images/logo.jpg")
+        };
+        saveData("zm_currentUser", currentUser);
+        logActivity(`Connexion Propriétaire Super-Admin : ${email}`);
+        showToast("Bienvenue Shams Cherubin (Propriétaire du Système) !", "success");
+        updateNavigation();
+        displayAccount();
+        showPage("admin");
+        return;
+      }
+
+      // 2. Appel à l'API REST Sécurisée MySQL
       if (typeof ApiClient !== "undefined") {
         try {
           const res = await ApiClient.login(email, password);
@@ -214,12 +235,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
           }
         } catch (apiErr) {
-          // Si le serveur a répondu une erreur explicite (identifiants invalides, etc.)
-          if (apiErr.status === 401 || apiErr.status === 403 || apiErr.status === 400 || apiErr.status === 409) {
-            showToast(apiErr.message || "Identifiants invalides.", "error");
+          if (apiErr.status === 403) {
+            showToast(apiErr.message || "Compte bloqué ou suspendu.", "error");
             return;
           }
-          console.warn("[Auth] API injoignable, bascule vers vérification locale:", apiErr);
+          console.warn("[Auth] API erreur/injoignable, vérification locale:", apiErr);
         }
       }
 
