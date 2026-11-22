@@ -270,13 +270,22 @@
   background: #0f172a;
   color: #ffffff;
   border-radius: var(--radius-full);
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
+  font-size: 13px;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
   margin-left: 4px;
+  transition: var(--transition);
+}
+
+.search-submit-btn:hover {
+  background: #0284c7;
 }
 
 .header-left-zone {
@@ -456,88 +465,130 @@
 /* ===================================================================
    RESPONSIVE HEADER MOBILE (Évite la barre kilométrique et le logo écrasé)
    =================================================================== */
-@media (max-width: 767px) {
+@media (max-width: 900px) {
   .main-header {
     padding: 0;
   }
 
   .header-inner {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 12px 10px 12px;
-    gap: 8px 10px;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 8px 12px 10px 12px !important;
+    row-gap: 8px !important;
+    column-gap: 10px !important;
   }
 
   /* Ligne 1 - Gauche : Burger + Logo complet sans être tronqué */
   .header-left-zone {
-    gap: 8px;
-    flex: 1;
-    min-width: 0;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex: 0 0 auto !important;
+    max-width: calc(100% - 130px) !important;
+    min-width: 0 !important;
   }
 
   .header-menu-btn {
-    padding: 6px;
-    font-size: 18px;
+    padding: 6px !important;
+    font-size: 18px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .header-brand {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    min-width: 0 !important;
   }
 
   .brand-logo-container {
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 8px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .brand-info {
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
 
   .brand-title {
-    font-size: 14px;
-    letter-spacing: -0.3px;
-    white-space: nowrap;
+    font-size: 14px !important;
+    letter-spacing: -0.3px !important;
+    white-space: nowrap !important;
   }
 
   .brand-subtitle {
-    font-size: 9px;
-    white-space: nowrap;
+    font-size: 9px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
   }
 
-  /* Ligne 1 - Droite : Thème et Profil Josue toujours visibles */
+  /* Ligne 1 - Droite : Thème et Profil toujours visibles */
   .header-actions {
-    gap: 6px;
-    flex-shrink: 0;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex: 0 0 auto !important;
+    margin-left: auto !important;
   }
 
   .header-action-btn {
-    padding: 6px 8px;
-    font-size: 16px;
+    padding: 6px 8px !important;
+    font-size: 16px !important;
   }
 
-  /* Ligne 2 : Barre de recherche épurée sur toute la largeur, fluide et proportionnée */
+  /* Ligne 2 : Barre de recherche complète occupant 100% de la largeur */
   .header-search {
-    order: 3;
-    width: 100%;
-    max-width: 100%;
-    margin-top: 2px;
+    order: 3 !important;
+    flex: 0 0 100% !important;
+    flex-basis: 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-top: 4px !important;
   }
 
   .search-input-wrapper {
-    padding: 2px 4px 2px 12px;
-    background: #f1f5f9;
-    border-radius: var(--radius-full);
+    width: 100% !important;
+    padding: 3px 6px 3px 12px !important;
+    background: #f1f5f9 !important;
+    border-radius: var(--radius-full) !important;
+    display: flex !important;
+    align-items: center !important;
   }
 
   .search-input-wrapper input {
-    font-size: 13px;
-    padding: 6px 4px;
+    flex: 1 !important;
+    min-width: 0 !important;
+    font-size: 13px !important;
+    padding: 6px 4px !important;
   }
 
   .search-camera-btn {
-    padding: 4px 6px;
-    font-size: 15px;
+    padding: 4px 6px !important;
+    font-size: 15px !important;
+    flex-shrink: 0 !important;
   }
 
   .search-submit-btn {
-    width: 28px;
-    height: 28px;
-    font-size: 11px;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    border-radius: var(--radius-full) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 12px !important;
+    padding: 0 !important;
+    flex-shrink: 0 !important;
+    background: #0f172a !important;
+    color: #ffffff !important;
+    border: none !important;
   }
 }
 
