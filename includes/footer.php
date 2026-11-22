@@ -42,14 +42,14 @@
 <script src="chart.min.js"></script>
 
 <!-- 3. Modules JavaScript Découpés Zaïre-Market -->
-<script src="assets/js/api-client.js?v=2026.17"></script>
-<script src="assets/js/core.js?v=2026.17"></script>
-<script src="assets/js/cart.js?v=2026.16"></script>
-<script src="assets/js/products.js?v=2026.16"></script>
-<script src="assets/js/categories.js?v=2026.16"></script>
-<script src="assets/js/auth.js?v=2026.16"></script>
-<script src="assets/js/admin-dashboard.js?v=2026.16"></script>
-<script src="assets/js/app.js?v=2026.16"></script>
+<script src="assets/js/api-client.js?v=2026.20"></script>
+<script src="assets/js/core.js?v=2026.20"></script>
+<script src="assets/js/cart.js?v=2026.20"></script>
+<script src="assets/js/products.js?v=2026.20"></script>
+<script src="assets/js/categories.js?v=2026.20"></script>
+<script src="assets/js/auth.js?v=2026.20"></script>
+<script src="assets/js/admin-dashboard.js?v=2026.20"></script>
+<script src="assets/js/app.js?v=2026.20"></script>
 
 </body>
 </html>

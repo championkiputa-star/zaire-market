@@ -350,16 +350,19 @@ function displayAccount() {
   const loggedIn = document.getElementById("loggedIn");
   const profileInfo = document.getElementById("profileInfo");
   const userOrdersList = document.getElementById("userOrdersList");
+  const mainHeader = document.querySelector(".main-header");
 
   if (!currentUser) {
     if (loggedOut) loggedOut.hidden = false;
     if (loggedIn) loggedIn.hidden = true;
+    if (mainHeader) mainHeader.style.display = "none";
     showLogin();
     return;
   }
 
   if (loggedOut) loggedOut.hidden = true;
   if (loggedIn) loggedIn.hidden = false;
+  if (mainHeader) mainHeader.style.display = "";
 
   let roleLabel = "Client Marketplace (Acheteur / Vendeur)";
   let roleBadgeClass = "badge-category";

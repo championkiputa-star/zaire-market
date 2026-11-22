@@ -44,6 +44,13 @@ function showPage(pageId) {
     }
   });
 
+  // Visibilité du header : masqué uniquement sur la page de connexion, visible sur les tableaux de bord et toutes les autres pages
+  const mainHeader = document.querySelector(".main-header");
+  const isLoginPage = (pageId === "account" && (typeof currentUser === "undefined" || !currentUser));
+  if (mainHeader) {
+    mainHeader.style.display = isLoginPage ? "none" : "";
+  }
+
   // Actions spécifiques lors de l'ouverture d'une page
   if (pageId === "home") {
     renderQuickCategories();
