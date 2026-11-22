@@ -76,6 +76,19 @@
   color: #94a3b8;
 }
 
+/* Logo en mode sombre : fond blanc arrondi pour isoler proprement le logo */
+[data-theme="dark"] .brand-logo-container {
+  background: #ffffff !important;
+  border-radius: 10px !important;
+  padding: 4px !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .brand-logo-img {
+  object-fit: contain !important;
+  border-radius: 6px !important;
+}
+
 [data-theme="dark"] .search-input-wrapper {
   background: #1e293b;
   border-color: #334155;
