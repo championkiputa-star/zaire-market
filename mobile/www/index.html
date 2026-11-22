@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <title>Zaïre-Market 🇨🇩</title>
+  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="theme-color" content="#0284c7" />
+
+  <link rel="icon" type="image/jpeg" href="assets/logo.jpg" />
+
+  <!-- Ionic Framework (Web Components Standalone) -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+
+  <!-- FontAwesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Feuille de Style Mobile Dédiée -->
+  <link rel="stylesheet" href="css/mobile.css" />
+</head>
+<body class="dark">
+  <ion-app>
+
+    <!-- ============================================================== -->
+    <!-- NAVIGATION PAR ONGLETS NATIVE ANDROID (IONIC TABS) -->
+    <!-- ============================================================== -->
+    <ion-tabs id="mainTabs">
+
+      <!-- ========================================================== -->
+      <!-- 1. ONGLET ACCUEIL -->
+      <!-- ========================================================== -->
+      <ion-tab tab="tab-home">
+        <ion-header translucent="true">
+          <ion-toolbar class="mobile-header-toolbar">
+            <div class="mobile-brand" slot="start" style="padding-left: 12px;">
+              <img src="assets/logo.jpg" alt="Logo" class="mobile-logo-img" />
+              <div>
+                <span class="mobile-brand-title">ZAÏRE-MARKET</span>
+                <span class="mobile-brand-subtitle">RDC • Marketplace Officielle 🇨🇩</span>
+              </div>
+            </div>
+            <ion-buttons slot="end">
+              <ion-button onclick="openServerConfigModal()">
+                <i class="fa-solid fa-server" style="color: #38bdf8; font-size: 16px;"></i>
+              </ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content fullscreen="true">
+          <!-- Pull to Refresh -->
+          <ion-refresher slot="fixed" id="homeRefresher">
+            <ion-refresher-content pulling-text="Tirer pour actualiser" refreshing-spinner="crescent" refreshing-text="Actualisation des offres..."></ion-refresher-content>
+          </ion-refresher>
+
+          <!-- Grand Bento Hero Mobile -->
+          <div class="mobile-hero-card">
+            <div class="mobile-hero-badge">
+              <i class="fa-solid fa-crown"></i> Zaïre Visionnaire
+            </div>
+            <h1 class="mobile-hero-title">Le Plus Grand Marché Numérique de la RDC</h1>
+            <p class="mobile-hero-desc">Achetez et vendez partout à Kinshasa, Lubumbashi, Goma et dans les 26 provinces.</p>
+            <ion-button expand="block" size="small" color="primary" onclick="switchMobileTab('tab-catalog')">
+              <i class="fa-solid fa-fire" style="margin-right: 6px;"></i> Explorer le Catalogue
+            </ion-button>
+          </div>
+
+          <!-- Barre de Recherche Rapide -->
+          <div style="padding: 0 12px 6px 12px;">
+            <ion-searchbar id="homeSearchBar" placeholder="Rechercher un produit, marque..." debounce="400"></ion-searchbar>
+          </div>
+
+          <!-- Titre Section Produits Récents -->
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 14px;">
+            <h2 style="font-size: 16px; font-weight: 800; margin: 0; color: #ffffff;">
+              <i class="fa-solid fa-bolt" style="color: #fbbf24; margin-right: 6px;"></i> Articles Récents
+            </h2>
+            <ion-note color="primary" style="font-size: 12px; font-weight: 700; cursor: pointer;" onclick="switchMobileTab('tab-catalog')">
+              Tout voir <i class="fa-solid fa-chevron-right"></i>
+            </ion-note>
+          </div>
+
+          <!-- Grille des Produits Accueil -->
+          <div class="mobile-products-grid" id="homeProductsGrid">
+            <!-- Injecté par JavaScript -->
+          </div>
+        </ion-content>
+      </ion-tab>
+
+      <!-- ========================================================== -->
+      <!-- 2. ONGLET CATALOGUE COMPLET -->
+      <!-- ========================================================== -->
+      <ion-tab tab="tab-catalog">
+        <ion-header translucent="true">
+          <ion-toolbar class="mobile-header-toolbar">
+            <ion-title style="font-weight: 800; font-size: 16px;">Catalogue 28 Rayons</ion-title>
+          </ion-toolbar>
+          <ion-toolbar class="mobile-header-toolbar" style="padding-top: 0;">
+            <ion-searchbar id="catalogSearchBar" placeholder="Rechercher..." debounce="300"></ion-searchbar>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content fullscreen="true">
+          <ion-refresher slot="fixed" id="catalogRefresher">
+            <ion-refresher-content pulling-text="Glisser pour rafraîchir" refreshing-spinner="crescent"></ion-refresher-content>
+          </ion-refresher>
+
+          <!-- Filtres Villes & Catégories -->
+          <div style="display: flex; gap: 8px; padding: 8px 12px;">
+            <ion-select id="catalogCitySelect" placeholder="Toutes les Villes" interface="popover" style="background: #131e36; border-radius: 8px; font-size: 12px; flex: 1;">
+              <ion-select-option value="all">Toutes les Villes</ion-select-option>
+              <ion-select-option value="Kinshasa">Kinshasa</ion-select-option>
+              <ion-select-option value="Lubumbashi">Lubumbashi</ion-select-option>
+              <ion-select-option value="Goma">Goma</ion-select-option>
+              <ion-select-option value="Bukavu">Bukavu</ion-select-option>
+              <ion-select-option value="Kisangani">Kisangani</ion-select-option>
+              <ion-select-option value="Kolwezi">Kolwezi</ion-select-option>
+              <ion-select-option value="Matadi">Matadi</ion-select-option>
+            </ion-select>
+
+            <ion-select id="catalogCategorySelect" placeholder="Catégories" interface="action-sheet" style="background: #131e36; border-radius: 8px; font-size: 12px; flex: 1;">
+              <ion-select-option value="all">Tous les Rayons (28)</ion-select-option>
+              <ion-select-option value="Agriculture & Nourriture">Agriculture & Nourriture</ion-select-option>
+              <ion-select-option value="Vêtement & Accessoires">Vêtement & Accessoires</ion-select-option>
+              <ion-select-option value="Habits de Différentes Marques">Habits de Marques</ion-select-option>
+              <ion-select-option value="Électroniques de Consommation">Électroniques</ion-select-option>
+              <ion-select-option value="Arts & Métiers">Arts & Métiers</ion-select-option>
+              <ion-select-option value="Transport">Transport</ion-select-option>
+              <ion-select-option value="Santé & Hygiène">Santé & Hygiène</ion-select-option>
+              <ion-select-option value="Meuble">Meuble</ion-select-option>
+            </ion-select>
+          </div>
+
+          <!-- Grille des Produits -->
+          <div class="mobile-products-grid" id="catalogProductsGrid"></div>
+        </ion-content>
+      </ion-tab>
+
+      <!-- ========================================================== -->
+      <!-- 3. ONGLET PANIER -->
+      <!-- ========================================================== -->
+      <ion-tab tab="tab-cart">
+        <ion-header translucent="true">
+          <ion-toolbar class="mobile-header-toolbar">
+            <ion-title style="font-weight: 800; font-size: 16px;">Mon Panier</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content fullscreen="true">
+          <div id="cartEmptyState" style="text-align: center; padding: 40px 20px; display: none;">
+            <i class="fa-solid fa-cart-shopping" style="font-size: 48px; color: #475569; margin-bottom: 12px;"></i>
+            <h3 style="font-size: 17px; font-weight: 700; color: #ffffff;">Votre panier est vide</h3>
+            <p style="font-size: 13px; color: #94a3b8; margin-bottom: 20px;">Explorez nos articles et ajoutez vos coups de cœur.</p>
+            <ion-button color="primary" size="small" onclick="switchMobileTab('tab-catalog')">Parcourir les Produits</ion-button>
+          </div>
+
+          <ion-list id="cartItemsList" style="background: transparent; padding: 12px;"></ion-list>
+
+          <!-- Sélecteur Moyen de Paiement -->
+          <div id="cartPaymentSection" style="padding: 12px;">
+            <h4 style="font-size: 14px; font-weight: 700; color: #ffffff; margin-bottom: 8px;">Moyen de Paiement</h4>
+            <ion-radio-group id="cartPaymentRadio" value="Paiement à la livraison (Cash)">
+              <ion-item class="mobile-cart-item">
+                <i class="fa-solid fa-money-bill-wave" style="color: #10b981; margin-right: 12px;"></i>
+                <ion-label>Paiement Cash à la livraison</ion-label>
+                <ion-radio slot="end" value="Paiement à la livraison (Cash)"></ion-radio>
+              </ion-item>
+              <ion-item class="mobile-cart-item">
+                <i class="fa-solid fa-mobile-screen" style="color: #ef4444; margin-right: 12px;"></i>
+                <ion-label>M-Pesa (Vodacom)</ion-label>
+                <ion-radio slot="end" value="M-Pesa (Vodacom)"></ion-radio>
+              </ion-item>
+              <ion-item class="mobile-cart-item">
+                <i class="fa-solid fa-phone" style="color: #f59e0b; margin-right: 12px;"></i>
+                <ion-label>Airtel Money</ion-label>
+                <ion-radio slot="end" value="Airtel Money"></ion-radio>
+              </ion-item>
+              <ion-item class="mobile-cart-item">
+                <i class="fa-solid fa-wallet" style="color: #f97316; margin-right: 12px;"></i>
+                <ion-label>Orange Money</ion-label>
+                <ion-radio slot="end" value="Orange Money"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </div>
+        </ion-content>
+
+        <!-- Résumé Totaux et Bouton de Commande -->
+        <ion-footer id="cartFooter" style="background: #090e1a;">
+          <div class="mobile-cart-summary">
+            <div class="mobile-summary-row">
+              <span style="color: #94a3b8;">Total Panier :</span>
+              <span class="mobile-summary-total" id="mobileCartTotalUSD">$0.00</span>
+            </div>
+            <div class="mobile-summary-row" style="margin-bottom: 12px;">
+              <span style="color: #94a3b8; font-size: 12px;">Équivalent Franc Congolais :</span>
+              <span style="color: #fbbf24; font-weight: 700; font-size: 13px;" id="mobileCartTotalCDF">0 FC</span>
+            </div>
+            <ion-button expand="block" color="primary" id="btnMobileCheckout" onclick="processMobileCheckout()">
+              <i class="fa-solid fa-lock" style="margin-right: 8px;"></i> Valider la Commande Sécurisée
+            </ion-button>
+          </div>
+        </ion-footer>
+      </ion-tab>
+
+      <!-- ========================================================== -->
+      <!-- 4. ONGLET VENDRE UN PRODUIT -->
+      <!-- ========================================================== -->
+      <ion-tab tab="tab-sell">
+        <ion-header translucent="true">
+          <ion-toolbar class="mobile-header-toolbar">
+            <ion-title style="font-weight: 800; font-size: 16px;">Vendre mon Produit</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content fullscreen="true" style="padding: 12px;">
+          <div style="padding: 12px;">
+            <p style="font-size: 13px; color: #94a3b8;">Publiez votre article certifié sur le réseau national Zaïre-Market.</p>
+
+            <form id="mobileSellForm" onsubmit="handleMobileSellSubmit(event)">
+              <ion-item class="mobile-cart-item">
+                <ion-label position="stacked">Nom de l'article *</ion-label>
+                <ion-input id="sellName" placeholder="Ex : Chaussures de Ville Cuir" required></ion-input>
+              </ion-item>
+
+              <ion-item class="mobile-cart-item">
+                <ion-label position="stacked">Prix en USD ($) *</ion-label>
+                <ion-input id="sellPrice" type="number" step="0.5" placeholder="Ex : 35.00" required></ion-input>
+              </ion-item>
+
+              <ion-item class="mobile-cart-item">
+                <ion-label position="stacked">Catégorie *</ion-label>
+                <ion-select id="sellCategory" placeholder="Choisir une catégorie" interface="action-sheet" required>
+                  <ion-select-option value="Agriculture & Nourriture">Agriculture & Nourriture</ion-select-option>
+                  <ion-select-option value="Vêtement & Accessoires">Vêtement & Accessoires</ion-select-option>
+                  <ion-select-option value="Habits de Différentes Marques">Habits de Marques</ion-select-option>
+                  <ion-select-option value="Électroniques de Consommation">Électroniques</ion-select-option>
+                  <ion-select-option value="Arts & Métiers">Arts & Métiers</ion-select-option>
+                  <ion-select-option value="Transport">Transport</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item class="mobile-cart-item">
+                <ion-label position="stacked">Ville en RDC *</ion-label>
+                <ion-select id="sellCity" value="Kinshasa" interface="popover">
+                  <ion-select-option value="Kinshasa">Kinshasa</ion-select-option>
+                  <ion-select-option value="Lubumbashi">Lubumbashi</ion-select-option>
+                  <ion-select-option value="Goma">Goma</ion-select-option>
+                  <ion-select-option value="Bukavu">Bukavu</ion-select-option>
+                  <ion-select-option value="Kolwezi">Kolwezi</ion-select-option>
+                </ion-select>
+              </ion-item>
+
+              <ion-item class="mobile-cart-item">
+                <ion-label position="stacked">URL Image du produit</ion-label>
+                <ion-input id="sellImage" placeholder="https://..."></ion-input>
+              </ion-item>
+
+              <ion-item class="mobile-cart-item">
+                <ion-label position="stacked">Description de l'article</ion-label>
+                <ion-textarea id="sellDescription" rows="3" placeholder="État, spécifications, détails..."></ion-textarea>
+              </ion-item>
+
+              <ion-button expand="block" type="submit" color="primary" style="margin-top: 16px;">
+                <i class="fa-solid fa-circle-check" style="margin-right: 6px;"></i> Publier sur Zaïre-Market
+              </ion-button>
+            </form>
+          </div>
+        </ion-content>
+      </ion-tab>
+
+      <!-- ========================================================== -->
+      <!-- 5. ONGLET COMPTE & PARAMÈTRES -->
+      <!-- ========================================================== -->
+      <ion-tab tab="tab-account">
+        <ion-header translucent="true">
+          <ion-toolbar class="mobile-header-toolbar">
+            <ion-title style="font-weight: 800; font-size: 16px;">Mon Compte</ion-title>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content fullscreen="true" style="padding: 12px;">
+          <!-- État Déconnecté -->
+          <div id="mobileLoggedOutView" style="padding: 12px;">
+            <div style="text-align: center; margin-bottom: 20px;">
+              <img src="assets/logo.jpg" alt="Logo" style="width: 64px; height: 64px; border-radius: 16px; border: 2px solid #fbbf24;" />
+              <h2 style="font-size: 18px; font-weight: 800; color: #ffffff; margin-top: 8px;">Zaïre-Market Compte</h2>
+              <p style="font-size: 13px; color: #94a3b8;">Connectez-vous pour gérer vos commandes et publications.</p>
+            </div>
+
+            <form id="mobileLoginForm" onsubmit="handleMobileLoginSubmit(event)">
+              <ion-item class="mobile-cart-item">
+                <ion-label position="stacked">Adresse Email</ion-label>
+                <ion-input id="mobileLoginEmail" type="email" placeholder="votre-email@domaine.cd" required></ion-input>
+              </ion-item>
+
+              <ion-item class="mobile-cart-item">
+                <ion-label position="stacked">Mot de passe</ion-label>
+                <ion-input id="mobileLoginPassword" type="password" placeholder="••••••••" required></ion-input>
+              </ion-item>
+
+              <ion-button expand="block" type="submit" color="primary" style="margin-top: 14px;">
+                Se Connecter
+              </ion-button>
+            </form>
+
+            <div class="mobile-settings-card" style="margin-top: 24px;">
+              <h4 style="font-size: 13px; font-weight: 700; color: #38bdf8; margin: 0 0 6px 0;">
+                <i class="fa-solid fa-wifi"></i> Connexion au Serveur Backend
+              </h4>
+              <p style="font-size: 11px; color: #94a3b8; margin: 0 0 8px 0;" id="serverUrlDisplay">URL active : http://localhost/zaire market/api</p>
+              <ion-button fill="outline" size="small" expand="block" onclick="openServerConfigModal()">
+                Modifier l'IP du Serveur WAMP
+              </ion-button>
+            </div>
+          </div>
+
+          <!-- État Connecté -->
+          <div id="mobileLoggedInView" style="display: none; padding: 12px;">
+            <div class="mobile-settings-card" style="text-align: center;">
+              <img id="mobileUserAvatar" src="assets/logo.jpg" style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid #38bdf8; margin-bottom: 8px;" />
+              <h3 id="mobileUserName" style="font-size: 17px; font-weight: 800; color: #ffffff; margin: 0;">Utilisateur</h3>
+              <p id="mobileUserEmail" style="font-size: 12px; color: #94a3b8; margin: 2px 0 8px 0;">email@domaine.cd</p>
+              <ion-badge color="primary" id="mobileUserRoleBadge">Client Certifié</ion-badge>
+            </div>
+
+            <div style="margin-top: 16px;">
+              <h4 style="font-size: 14px; font-weight: 800; color: #ffffff; margin-bottom: 8px;">Mes Commandes</h4>
+              <ion-list id="mobileUserOrdersList" style="background: transparent;"></ion-list>
+            </div>
+
+            <ion-button expand="block" color="danger" fill="outline" style="margin-top: 24px;" onclick="handleMobileLogout()">
+              <i class="fa-solid fa-arrow-right-from-bracket" style="margin-right: 6px;"></i> Se Déconnecter
+            </ion-button>
+          </div>
+        </ion-content>
+      </ion-tab>
+
+      <!-- Barre d'Onglets Inférieure -->
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="tab-home">
+          <i class="fa-solid fa-house" style="font-size: 18px;"></i>
+          <ion-label>Accueil</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="tab-catalog">
+          <i class="fa-solid fa-layer-group" style="font-size: 18px;"></i>
+          <ion-label>Catalogue</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="tab-cart">
+          <i class="fa-solid fa-cart-shopping" style="font-size: 18px;"></i>
+          <ion-label>Panier</ion-label>
+          <ion-badge color="danger" id="mobileCartTabBadge" style="display: none;">0</ion-badge>
+        </ion-tab-button>
+
+        <ion-tab-button tab="tab-sell">
+          <i class="fa-solid fa-circle-plus" style="font-size: 18px; color: #fbbf24;"></i>
+          <ion-label>Vendre</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="tab-account">
+          <i class="fa-solid fa-user" style="font-size: 18px;"></i>
+          <ion-label>Compte</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+
+    </ion-tabs>
+  </ion-app>
+
+  <!-- Scripts Application Mobile Native -->
+  <script src="js/mobile-api.js"></script>
+  <script src="js/mobile-app.js"></script>
+</body>
+</html>

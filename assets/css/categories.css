@@ -1,0 +1,273 @@
+/* ===================================================================
+   ZAÏRE-MARKET — Styles des Catégories (Reproduction fidèle de la capture)
+   =================================================================== */
+
+.category-view-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.category-view-header {
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.category-view-header h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.category-counter {
+  font-size: 13px;
+  color: var(--text-muted);
+  background: var(--border-subtle);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+}
+
+/* Liste de Catégories (Ligne par Ligne avec Icône et Chevron) */
+.category-list-styled {
+  list-style: none;
+  background: var(--bg-card);
+}
+
+.category-list-item {
+  border-bottom: 1px solid var(--border-subtle);
+  transition: var(--transition);
+}
+
+.category-list-item:last-child {
+  border-bottom: none;
+}
+
+.category-list-item:hover {
+  background: var(--border-subtle);
+}
+
+.category-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  width: 100%;
+  text-decoration: none;
+  color: #1e293b;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  text-align: left;
+}
+
+.category-link-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.category-icon-wrapper {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #334155;
+  font-size: 18px;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.category-list-item:hover .category-icon-wrapper {
+  color: #0284c7;
+  transform: scale(1.1);
+}
+
+.category-link-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-main);
+  letter-spacing: -0.2px;
+}
+
+.category-chevron {
+  color: var(--text-muted);
+  font-size: 14px;
+  transition: var(--transition);
+}
+
+.category-list-item:hover .category-chevron {
+  color: var(--accent-blue);
+  transform: translateX(3px);
+}
+
+/* Grille Rapide de Catégories pour l'Accueil (Fluid Responsive) */
+.quick-categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+
+@media (max-width: 768px) {
+  .quick-categories-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin: 14px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .quick-categories-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .quick-category-card {
+    padding: 10px 6px;
+  }
+  .quick-category-card i {
+    font-size: 20px;
+  }
+  .quick-category-card span {
+    font-size: 11px;
+    line-height: 1.2;
+  }
+}
+
+.quick-category-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 14px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.quick-category-card:hover {
+  border-color: var(--accent-blue);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.quick-category-card i {
+  font-size: 24px;
+  color: var(--accent-blue);
+}
+
+.quick-category-card span {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* Modal / Tiroir Plein Écran Catégories */
+.categories-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.25s ease-in-out;
+}
+
+.categories-modal.active {
+  display: block;
+  opacity: 1;
+}
+
+.categories-drawer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 85%;
+  max-width: 420px;
+  height: 100%;
+  background: var(--bg-card);
+  box-shadow: var(--shadow-lg);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.categories-modal.active .categories-drawer {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  padding: 16px 20px;
+  background: #0f172a;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.drawer-header h2 {
+  font-size: 17px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.drawer-close-btn {
+  background: transparent;
+  color: #ffffff;
+  font-size: 18px;
+  padding: 6px;
+}
+
+/* Pied de page style Made-in-China (présent sur la capture) */
+.market-footer-links {
+  background: #f8fafc;
+  padding: 24px 16px;
+  border-top: 1px solid var(--border-light);
+  margin-top: 30px;
+  text-align: center;
+}
+
+.footer-nav-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 18px;
+  margin-bottom: 16px;
+}
+
+.footer-nav-tags a {
+  font-size: 12.5px;
+  color: #475569;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.footer-nav-tags a:hover {
+  color: #0284c7;
+  text-decoration: underline;
+}
+
+.footer-copyright {
+  font-size: 11.5px;
+  color: #94a3b8;
+  margin-top: 10px;
+}

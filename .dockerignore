@@ -1,0 +1,6 @@
+.git
+.github
+mobile/node_modules
+mobile/android
+scratch
+*.log

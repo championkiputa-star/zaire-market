@@ -1,0 +1,23 @@
+# ==========================================================
+# ZAÏRE-MARKET — Configuration Apache & Sécurité Production
+# ==========================================================
+
+DirectoryIndex index.php index.html
+
+# Bloquer l'accès direct aux fichiers et dossiers sensibles
+<FilesMatch "^(config\.php|database\.php|\.env|.*\.sql|\.git.*|Dockerfile)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Autoriser la réécriture d'URL
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+</IfModule>
+
+# En-têtes de sécurité
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>

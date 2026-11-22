@@ -1,0 +1,39 @@
+# ── Dépendances Node / Mobile ──────────────────────────
+/mobile/node_modules/
+/mobile/android/.gradle/
+/mobile/android/app/build/
+/mobile/android/build/
+/mobile/android/.idea/
+/mobile/.capacitor/
+
+# ── Dossiers de travail temporaires ────────────────────
+/scratch/
+
+# ── Archives et fichiers de build locaux ───────────────
+assets.zip
+*.zip
+*.tar.gz
+
+# ── Logs ───────────────────────────────────────────────
+*.log
+/logs/
+
+# ── OS ─────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── IDE ────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── Polices et bibliothèques volumineuses (remplacées par CDN sur le Cloud) ──
+fontawesome-free-6.7.2-web/
+
+# ── Variables d'environnement (NE JAMAIS COMMITER) ─────
+.env
+.env.local
+.env.production
+config/secrets.php
