@@ -51,7 +51,7 @@
 
   <!-- Feuilles de Style Modulaires Zaïre-Market -->
   <link rel="stylesheet" href="assets/css/style.css?v=2026.17">
-  <link rel="stylesheet" href="assets/css/header-nav.css?v=2026.17">
+  <link rel="stylesheet" href="assets/css/header-nav.css?v=2026.18">
   <link rel="stylesheet" href="assets/css/categories.css?v=2026.17">
   <link rel="stylesheet" href="assets/css/products.css?v=2026.17">
   <link rel="stylesheet" href="assets/css/cart-checkout.css?v=2026.17">
@@ -90,11 +90,7 @@
       <!-- Logo Officiel Zaïre-Market Visionnaire -->
       <a href="#" class="header-brand" onclick="showPage('home'); return false;">
         <div class="brand-logo-container">
-          <img src="assets/images/logo.jpg" alt="Zaïre Visionnaire Logo" class="brand-logo-img">
-        </div>
-        <div class="brand-info">
-          <span class="brand-title">ZAÏRE-MARKET</span>
-          <span class="brand-subtitle">Visionnaire • RDC 🇨🇩</span>
+          <img src="assets/images/logo.jpg" alt="Zaïre-Market Logo" class="brand-logo-img">
         </div>
       </a>
 

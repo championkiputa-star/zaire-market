@@ -48,16 +48,16 @@
 }
 
 .brand-logo-container {
-  width: 42px;
-  height: 42px;
+  width: 52px;
+  height: 52px;
   border-radius: 10px;
   overflow: hidden;
-  background: #000000;
+  background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  border: 1.5px solid rgba(0, 0, 0, 0.08);
   flex-shrink: 0;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -504,8 +504,8 @@
   }
 
   .brand-logo-container {
-    width: 34px !important;
-    height: 34px !important;
+    width: 42px !important;
+    height: 42px !important;
     border-radius: 8px !important;
     flex-shrink: 0 !important;
   }
