@@ -1573,6 +1573,21 @@
           <h2 style="font-size: 20px; font-weight: 800; color: var(--text-main); margin-bottom: 4px;">Connexion</h2>
           <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">Connectez-vous à votre compte client ou vendeur Zaïre-Market.</p>
 
+          <!-- Bouton Continuer avec Google -->
+          <button type="button" class="btn-google-auth" onclick="loginWithGoogle()" title="Continuer avec Google">
+            <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+              <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.616z"/>
+              <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/>
+              <path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z"/>
+              <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z"/>
+            </svg>
+            <span>Continuer avec Google</span>
+          </button>
+
+          <div class="auth-divider">
+            <span>ou avec votre email</span>
+          </div>
+
           <div class="form-group">
             <label for="loginEmail">Adresse Email *</label>
             <input id="loginEmail" type="email" class="form-control" placeholder="exemple@zaire-market.cd" required>
@@ -1598,11 +1613,26 @@
           <h2 style="font-size: 20px; font-weight: 800; color: var(--text-main); margin-bottom: 4px;">Créer un compte utilisateur</h2>
           <div style="background: rgba(2, 132, 199, 0.1); border: 1px solid rgba(2, 132, 199, 0.25); border-radius: 8px; padding: 10px; margin-bottom: 14px;">
             <small style="color: var(--accent-blue); font-weight: 600; display: block;">
-              <i class="fa-solid fa-circle-info"></i> Obligatoire pour tous les clients et vendeurs
+              <i class="fa-solid fa-circle-info"></i> Inscription rapide partout en RDC
             </small>
             <small style="color: var(--text-muted); font-size: 11.5px;">
-              Vous devez impérativement créer votre compte afin de pouvoir publier des articles ou passer commande partout en RDC.
+              Rejoignez des milliers d'acheteurs et vendeurs actifs dans les 26 provinces.
             </small>
+          </div>
+
+          <!-- Bouton Inscription avec Google -->
+          <button type="button" class="btn-google-auth" onclick="loginWithGoogle()" title="S'inscrire avec Google">
+            <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+              <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.616z"/>
+              <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/>
+              <path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z"/>
+              <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z"/>
+            </svg>
+            <span>Continuer avec Google</span>
+          </button>
+
+          <div class="auth-divider">
+            <span>ou inscription classique</span>
           </div>
 
           <div class="form-group">
@@ -1875,14 +1905,14 @@
 <!-- Libs & Scripts -->
 <script src="jquery.min.js"></script>
 <script src="chart.min.js"></script>
-<script src="assets/js/api-client.js?v=2026.21"></script>
-<script src="assets/js/core.js?v=2026.21"></script>
-<script src="assets/js/cart.js?v=2026.21"></script>
-<script src="assets/js/products.js?v=2026.21"></script>
-<script src="assets/js/categories.js?v=2026.21"></script>
-<script src="assets/js/auth.js?v=2026.21"></script>
-<script src="assets/js/admin-dashboard.js?v=2026.21"></script>
-<script src="assets/js/app.js?v=2026.21"></script>
+<script src="assets/js/api-client.js?v=2026.22"></script>
+<script src="assets/js/core.js?v=2026.22"></script>
+<script src="assets/js/cart.js?v=2026.22"></script>
+<script src="assets/js/products.js?v=2026.22"></script>
+<script src="assets/js/categories.js?v=2026.22"></script>
+<script src="assets/js/auth.js?v=2026.22"></script>
+<script src="assets/js/admin-dashboard.js?v=2026.22"></script>
+<script src="assets/js/app.js?v=2026.22"></script>
 
 </body>
 </html>

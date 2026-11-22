@@ -345,6 +345,18 @@
   border-bottom: 1px solid #1e293b !important;
 }
 
+[data-theme="dark"] .btn-google-auth {
+  background: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="dark"] .btn-google-auth:hover {
+  background: #283548 !important;
+  border-color: #475569 !important;
+}
+
 [data-theme="dark"] .form-header h1,
 [data-theme="dark"] .form-header h2,
 [data-theme="dark"] .auth-wrapper h1,

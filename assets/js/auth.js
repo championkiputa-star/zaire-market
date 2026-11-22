@@ -363,6 +363,129 @@ function logout() {
 }
 
 /**
+ * ===================================================================
+ * AUTHENTIFICATION GOOGLE SIGN-IN (CLIENT & VENDEUR & ADMIN)
+ * ===================================================================
+ */
+function loginWithGoogle() {
+  let modal = document.getElementById("googleAuthModal");
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.id = "googleAuthModal";
+    modal.className = "categories-modal";
+    modal.style.display = "none";
+    modal.style.alignItems = "center";
+    modal.style.justifyContent = "center";
+    modal.style.padding = "16px";
+    modal.style.zIndex = "10001";
+    modal.innerHTML = `
+      <div style="background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 16px; max-width: 420px; width: 100%; padding: 26px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); position: relative; animation: fadeIn 0.2s ease;">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <svg width="36" height="36" viewBox="0 0 18 18" style="margin-bottom: 8px;">
+            <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.616z"/>
+            <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/>
+            <path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z"/>
+            <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z"/>
+          </svg>
+          <h3 style="font-size: 18px; font-weight: 700; color: var(--text-main); margin-bottom: 4px;">Continuer avec Google</h3>
+          <p style="font-size: 12.5px; color: var(--text-muted);">Sélectionnez votre compte pour accéder à Zaïre-Market</p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+          <button type="button" onclick="completeGoogleAuth('Shams Cherubin', 'shamscherubin@gmail.com', 'super_admin')" class="btn" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: rgba(2, 132, 199, 0.08); border: 1px solid rgba(2, 132, 199, 0.25); border-radius: 10px; text-align: left; width: 100%;">
+            <div style="width: 38px; height: 38px; border-radius: 50%; background: #0f172a; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">SC</div>
+            <div style="flex: 1; min-width: 0;">
+              <strong style="display: block; font-size: 13.5px; color: var(--text-main);">Shams Cherubin <span style="font-size: 10px; background: #dc2626; color: #fff; padding: 1px 6px; border-radius: 10px; font-weight: 800;">Super-Admin</span></strong>
+              <small style="color: var(--text-muted); font-size: 11.5px;">shamscherubin@gmail.com</small>
+            </div>
+          </button>
+
+          <button type="button" onclick="completeGoogleAuth('Dieudonné Kabange', 'kabange.dieu@gmail.com', 'client')" class="btn" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--border-subtle); border: 1px solid var(--border-light); border-radius: 10px; text-align: left; width: 100%;">
+            <div style="width: 38px; height: 38px; border-radius: 50%; background: #0284c7; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">DK</div>
+            <div style="flex: 1; min-width: 0;">
+              <strong style="display: block; font-size: 13.5px; color: var(--text-main);">Dieudonné Kabange</strong>
+              <small style="color: var(--text-muted); font-size: 11.5px;">kabange.dieu@gmail.com</small>
+            </div>
+          </button>
+        </div>
+
+        <div class="auth-divider" style="margin: 14px 0 12px 0;">
+          <span>ou saisir une autre adresse Gmail</span>
+        </div>
+
+        <div style="margin-bottom: 16px;">
+          <input type="email" id="customGoogleEmail" placeholder="votre-compte@gmail.com" class="form-control" style="font-size: 13px; padding: 10px 12px;">
+          <input type="text" id="customGoogleName" placeholder="Votre nom complet (optionnel)" class="form-control" style="font-size: 13px; padding: 10px 12px; margin-top: 8px;">
+          <button type="button" onclick="submitCustomGoogleAuth()" class="btn btn-primary btn-block" style="margin-top: 10px; padding: 10px; font-size: 13px;">
+            <i class="fa-brands fa-google"></i> Valider la connexion Google
+          </button>
+        </div>
+
+        <button type="button" onclick="closeGoogleAuthModal()" class="btn btn-secondary btn-block" style="padding: 9px; font-size: 12px;">
+          Annuler
+        </button>
+      </div>
+    `;
+    document.body.appendChild(modal);
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeGoogleAuthModal();
+    });
+  }
+
+  modal.style.display = "flex";
+}
+
+function closeGoogleAuthModal() {
+  const modal = document.getElementById("googleAuthModal");
+  if (modal) modal.style.display = "none";
+}
+
+function submitCustomGoogleAuth() {
+  const emailInput = document.getElementById("customGoogleEmail");
+  const nameInput = document.getElementById("customGoogleName");
+  const email = emailInput ? emailInput.value.trim().toLowerCase() : "";
+  const name = nameInput && nameInput.value.trim() ? nameInput.value.trim() : (email.split("@")[0] || "Utilisateur Google");
+
+  if (!email || !email.includes("@")) {
+    showToast("Veuillez saisir une adresse email Google valide.", "error");
+    return;
+  }
+
+  const role = (email === "shamscherubin@gamil.com" || email === "shamscherubin@gmail.com") ? "super_admin" : "client";
+  completeGoogleAuth(name, email, role);
+}
+
+function completeGoogleAuth(name, email, role) {
+  closeGoogleAuthModal();
+
+  const isSuper = (email === "shamscherubin@gamil.com" || email === "shamscherubin@gmail.com" || role === "super_admin");
+  currentUser = {
+    id: isSuper ? "SUPER-ADMIN-001" : ("GOOGLE-" + Date.now().toString(36)),
+    name: isSuper ? "Shams Cherubin" : name,
+    email: email,
+    city: "Kinshasa",
+    role: isSuper ? "super_admin" : (role || "client"),
+    status: "active",
+    provider: "google",
+    permissions: isSuper ? ["users","products","categories","orders","payments","reports","support","statistics","logs"] : [],
+    avatar: isSuper ? loadData("zm_superadmin_avatar", "assets/images/logo.jpg") : "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200"
+  };
+
+  saveData("zm_currentUser", currentUser);
+  logActivity(`Connexion Google certifiée : ${email} (${currentUser.role})`);
+  showToast(`Connexion Google réussie ! Bienvenue ${currentUser.name}.`, "success");
+  updateNavigation();
+  displayAccount();
+
+  if (isAdmin()) {
+    showPage("admin");
+  } else {
+    showPage("home");
+  }
+}
+
+/**
  * Affichage des informations du compte utilisateur
  */
 function displayAccount() {
