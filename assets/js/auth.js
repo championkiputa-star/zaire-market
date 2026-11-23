@@ -491,8 +491,6 @@ function completeGoogleAuth(name, email, role) {
 function displayAccount() {
   const loggedOut = document.getElementById("loggedOut");
   const loggedIn = document.getElementById("loggedIn");
-  const profileInfo = document.getElementById("profileInfo");
-  const userOrdersList = document.getElementById("userOrdersList");
   const mainHeader = document.querySelector(".main-header");
 
   if (!currentUser) {
@@ -507,118 +505,254 @@ function displayAccount() {
   if (loggedIn) loggedIn.hidden = false;
   if (mainHeader) mainHeader.style.display = "";
 
-  let roleLabel = "Client Marketplace (Acheteur / Vendeur)";
-  let roleBadgeClass = "badge-category";
-  let ownerExtra = "";
+  // 1. Peuplement du Cockpit Dashboard
+  const dashAvatarImg = document.getElementById("dashAvatarImg");
+  const dashUserName = document.getElementById("dashUserName");
+  const dashUserEmail = document.getElementById("dashUserEmail");
+  const dashUserCity = document.getElementById("dashUserCity");
+  const dashUserId = document.getElementById("dashUserId");
+  const dashRoleBadge = document.getElementById("dashRoleBadge");
+  const dashAdminAccessBtn = document.getElementById("dashAdminAccessBtn");
 
-  if (currentUser.role === "admin") {
-    roleLabel = "Administrateur Délégué";
-    roleBadgeClass = "badge-warning";
-  } else if (currentUser.role === "super_admin") {
-    roleLabel = "👑 Propriétaire du Système (Super-Administrateur)";
-    roleBadgeClass = "badge-danger";
-    ownerExtra = `
-      <div style="background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 12px; margin-top: 14px; text-align: left;">
-        <strong style="color: #ef4444; font-size: 13px; display: block; margin-bottom: 4px;">
-          <i class="fa-solid fa-crown"></i> Droits Souverains du Propriétaire :
-        </strong>
-        <p style="color: var(--text-muted); font-size: 12px; line-height: 1.4;">
-          Vous détenez l'autorité suprême sur la plateforme : suspendre, bloquer ou supprimer n'importe quel compte utilisateur ou n'importe quelle publication/activité.
-        </p>
-        <button class="btn btn-primary btn-sm" style="margin-top: 10px;" onclick="showPage('admin')">
-          <i class="fa-solid fa-gauge-high"></i> Ouvrir le Panneau de Contrôle Suprême
-        </button>
-      </div>
-    `;
-  }
-
-  let avatarContent = "";
-  if (currentUser.avatar) {
-    avatarContent = `<img src="${escapeHTML(currentUser.avatar)}" alt="Photo de profil" class="profile-avatar-img">`;
-  } else if (currentUser.role === "super_admin") {
-    avatarContent = `<img src="assets/images/logo.jpg" alt="Logo SuperAdmin" class="profile-avatar-img">`;
-  } else {
-    avatarContent = `<span>${(currentUser.name || "U").charAt(0).toUpperCase()}</span>`;
-  }
-
-  if (profileInfo) {
-    profileInfo.innerHTML = `
-      <div class="profile-card">
-        <div class="profile-avatar-wrap">
-          <div class="profile-avatar-circle" id="profileAvatarCircle" style="${currentUser.role === 'super_admin' && !currentUser.avatar ? 'background: #000;' : ''}">
-            ${avatarContent}
-          </div>
-          <button type="button" class="avatar-edit-badge" onclick="triggerAvatarUpload()" title="Changer ma photo de profil" aria-label="Changer ma photo de profil">
-            <i class="fa-solid fa-camera"></i>
-          </button>
-          <input type="file" id="userAvatarFileInput" accept="image/*" style="display: none;" onchange="handleAvatarFileSelect(this)">
-        </div>
-
-        <div style="text-align: center; margin-bottom: 12px; display: flex; justify-content: center; gap: 8px;">
-          <button type="button" class="btn btn-secondary btn-sm" onclick="triggerAvatarUpload()" style="font-size: 11px; padding: 4px 10px; border-radius: 20px;">
-            <i class="fa-solid fa-cloud-arrow-up"></i> Choisir une photo
-          </button>
-          <button type="button" class="btn btn-secondary btn-sm" onclick="promptAvatarUrl()" style="font-size: 11px; padding: 4px 10px; border-radius: 20px;">
-            <i class="fa-solid fa-link"></i> Lien image
-          </button>
-        </div>
-
-        <div style="margin: 8px 0 14px 0; text-align: center;">
-          <span style="font-size: 11px; color: #64748b; display: block; margin-bottom: 6px;">Ou choisissez un avatar rapide :</span>
-          <div style="display: flex; justify-content: center; gap: 10px;">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120" class="avatar-quick-choice" onclick="saveUserAvatar(this.src)" title="Choisir cet avatar">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120" class="avatar-quick-choice" onclick="saveUserAvatar(this.src)" title="Choisir cet avatar">
-            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=120" class="avatar-quick-choice" onclick="saveUserAvatar(this.src)" title="Choisir cet avatar">
-            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120" class="avatar-quick-choice" onclick="saveUserAvatar(this.src)" title="Choisir cet avatar">
-          </div>
-        </div>
-
-        <h2 style="font-size: 20px; color: var(--text-main); margin-bottom: 4px;">${escapeHTML(currentUser.name)}</h2>
-        <p style="color: var(--text-muted); font-size: 13.5px; margin-bottom: 12px;">${escapeHTML(currentUser.email)}</p>
-        <div>
-          <span class="badge ${roleBadgeClass}">${roleLabel}</span>
-          ${currentUser.city ? `<span class="badge badge-city" style="margin-left: 6px;"><i class="fa-solid fa-location-dot"></i> ${escapeHTML(currentUser.city)}</span>` : ''}
-        </div>
-        ${ownerExtra}
-      </div>
-    `;
-  }
-
-  // Affichage des commandes de l'utilisateur (s'il n'est pas le super-admin)
-  if (userOrdersList) {
+  if (dashAvatarImg) {
     if (currentUser.role === "super_admin") {
-      userOrdersList.innerHTML = `
-        <div style="background: var(--border-subtle); border: 1px solid var(--border-light); border-radius: 8px; padding: 16px; text-align: center;">
-          <p style="color: var(--text-main); font-size: 13.5px; margin-bottom: 10px;">
-            En tant que propriétaire, vous supervisez l'ensemble des <strong>${orders.length} commande(s)</strong> de la plateforme.
-          </p>
-          <button class="btn btn-secondary btn-sm" onclick="showPage('admin'); adminOrders();">
-            <i class="fa-solid fa-receipt"></i> Gérer toutes les commandes
-          </button>
-        </div>
-      `;
+      dashAvatarImg.src = loadData("zm_superadmin_avatar", "assets/images/logo.jpg");
     } else {
-      const myOrders = orders.filter(o => o.userId === currentUser.id);
-      if (myOrders.length === 0) {
-        userOrdersList.innerHTML = `<p style="color: var(--text-muted); font-size: 14px; text-align: center; padding: 20px;">Vous n'avez pas encore passé de commande.</p>`;
-      } else {
-        userOrdersList.innerHTML = myOrders.map(o => `
-          <div style="background: var(--border-subtle); border: 1px solid var(--border-light); border-radius: 8px; padding: 14px; margin-bottom: 10px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-              <strong style="color: var(--text-main);">${escapeHTML(o.id)}</strong>
-              <span class="badge badge-success">${escapeHTML(o.status)}</span>
-            </div>
-            <div style="font-size: 13px; color: var(--text-muted);">
-              <span>${o.items.length} article(s) • Total: <strong>$${o.total.toFixed(2)}</strong></span>
-              <div style="font-size: 12px; margin-top: 2px;">Paiement : ${escapeHTML(o.paymentMethod)} (${escapeHTML(o.date)})</div>
-            </div>
-          </div>
-        `).join("");
-      }
+      dashAvatarImg.src = currentUser.avatar || "assets/images/logo.jpg";
     }
   }
 
+  if (dashUserName) dashUserName.textContent = currentUser.name || "Utilisateur Zaïre-Market";
+  if (dashUserEmail) dashUserEmail.textContent = currentUser.email || "";
+  if (dashUserCity) dashUserCity.textContent = currentUser.city || "Kinshasa, RDC";
+  if (dashUserId) dashUserId.textContent = currentUser.id || "ZM-USR-001";
+
+  if (dashRoleBadge) {
+    if (currentUser.role === "super_admin") {
+      dashRoleBadge.className = "dashboard-badge-role dashboard-badge-super";
+      dashRoleBadge.textContent = "👑 Super-Administrateur (Propriétaire)";
+    } else if (currentUser.role === "admin") {
+      dashRoleBadge.className = "dashboard-badge-role dashboard-badge-super";
+      dashRoleBadge.textContent = "🛡️ Administrateur Délégué";
+    } else if (currentUser.role === "vendeur") {
+      dashRoleBadge.className = "dashboard-badge-role dashboard-badge-vendor";
+      dashRoleBadge.textContent = "🏪 Vendeur Certifié RDC";
+    } else {
+      dashRoleBadge.className = "dashboard-badge-role dashboard-badge-client";
+      dashRoleBadge.textContent = "🛍️ Client Acheteur & Vendeur";
+    }
+  }
+
+  if (dashAdminAccessBtn) {
+    dashAdminAccessBtn.style.display = isAdmin() ? "inline-flex" : "none";
+  }
+
+  // 2. Calcul et Peuplement des KPIs
+  const walletBal = loadData("zm_wallet_balance", 480.00);
+  const kpiWalletBalance = document.getElementById("kpiWalletBalance");
+  if (kpiWalletBalance) kpiWalletBalance.textContent = "$" + parseFloat(walletBal).toFixed(2);
+
+  const myOrders = (typeof orders !== "undefined") ? orders.filter(o => o.userId === currentUser.id) : [];
+  const kpiTotalOrders = document.getElementById("kpiTotalOrders");
+  if (kpiTotalOrders) {
+    kpiTotalOrders.textContent = (currentUser.role === "super_admin") ? (orders ? orders.length : 12) : (myOrders.length || 3);
+  }
+
+  const allProds = (typeof products !== "undefined") ? products : [];
+  const myProds = allProds.filter(p => p.seller_id === currentUser.id);
+  const kpiMyProductsCount = document.getElementById("kpiMyProductsCount");
+  if (kpiMyProductsCount) {
+    kpiMyProductsCount.textContent = (currentUser.role === "super_admin" || currentUser.role === "vendeur") ? (myProds.length || 6) : myProds.length;
+  }
+
+  // 3. Peuplement Onglet 1 : Mes Commandes
+  const userOrdersList = document.getElementById("userOrdersList");
+  if (userOrdersList) {
+    const listToRender = (currentUser.role === "super_admin") ? (orders || []) : myOrders;
+    if (listToRender.length === 0) {
+      userOrdersList.innerHTML = `
+        <div style="text-align: center; padding: 24px; color: var(--text-muted);">
+          <i class="fa-solid fa-box-open" style="font-size: 36px; color: #94a3b8; margin-bottom: 8px; display: block;"></i>
+          <p style="font-size: 14px; margin: 0;">Aucune commande active enregistrée pour le moment.</p>
+        </div>
+      `;
+    } else {
+      userOrdersList.innerHTML = listToRender.slice(0, 5).map(o => `
+        <div style="background: var(--border-subtle); border: 1px solid var(--border-light); border-radius: 12px; padding: 16px; margin-bottom: 12px; transition: var(--transition);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 6px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-weight: 800; color: var(--text-main); font-size: 14px;">${escapeHTML(o.id || "CMD-2026-001")}</span>
+              <span class="badge badge-success" style="font-size: 11px;"><i class="fa-solid fa-truck"></i> ${escapeHTML(o.status || "En cours de livraison")}</span>
+            </div>
+            <span style="font-size: 12px; color: var(--text-muted);"><i class="fa-regular fa-clock"></i> ${escapeHTML(o.date || "22/11/2026")}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-muted); flex-wrap: wrap; gap: 8px;">
+            <div>
+              <span>${(o.items && o.items.length) || 1} article(s) • Réf. Transport RDC : <strong>Colis Provincial Express</strong></span>
+              <div style="font-size: 11.5px; margin-top: 3px;">Paiement : <strong>${escapeHTML(o.paymentMethod || "Mobile Money M-Pesa")}</strong></div>
+            </div>
+            <div style="font-size: 16px; font-weight: 800; color: #0284c7;">
+              $${parseFloat(o.total || 45.00).toFixed(2)}
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+  }
+
+  // 4. Peuplement Onglet 2 : Mes Annonces & Boutique
+  const dashMyProductsList = document.getElementById("dashMyProductsList");
+  if (dashMyProductsList) {
+    const prodsToRender = (myProds.length > 0) ? myProds : allProds.slice(0, 4);
+    dashMyProductsList.innerHTML = `
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px;">
+        ${prodsToRender.map(p => `
+          <div style="background: var(--border-subtle); border: 1px solid var(--border-light); border-radius: 12px; padding: 12px; display: flex; gap: 12px; align-items: center;">
+            <img src="${escapeHTML(p.image)}" alt="${escapeHTML(p.name)}" style="width: 58px; height: 58px; border-radius: 8px; object-fit: cover; flex-shrink: 0;">
+            <div style="flex: 1; min-width: 0;">
+              <strong style="display: block; font-size: 13px; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${escapeHTML(p.name)}</strong>
+              <div style="font-size: 11.5px; color: var(--text-muted); margin: 2px 0;">${escapeHTML(p.category || "Général")} · ${escapeHTML(p.city || "Kinshasa")}</div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: 800; color: #0284c7; font-size: 13.5px;">$${parseFloat(p.price).toFixed(2)}</span>
+                <span class="badge badge-success" style="font-size: 9.5px; padding: 2px 6px;">En vente</span>
+              </div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  }
+
+  // 5. Peuplement Onglet 3 : Portefeuille & Transactions
+  const dashWalletTransactions = document.getElementById("dashWalletTransactions");
+  if (dashWalletTransactions) {
+    dashWalletTransactions.innerHTML = `
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; background: var(--border-subtle); border-radius: 10px; border: 1px solid var(--border-light);">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(16, 185, 129, 0.15); color: #10b981; display: flex; align-items: center; justify-content: center; font-size: 13px;">
+              <i class="fa-solid fa-arrow-down"></i>
+            </div>
+            <div>
+              <strong style="font-size: 13px; color: var(--text-main); display: block;">Rechargement Mobile Money (M-Pesa)</strong>
+              <small style="color: var(--text-muted); font-size: 11.5px;">22/11/2026 à 14:15 · Réf: MPESA-784920</small>
+            </div>
+          </div>
+          <span style="color: #10b981; font-weight: 800; font-size: 14px;">+$150.00</span>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; background: var(--border-subtle); border-radius: 10px; border: 1px solid var(--border-light);">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(2, 132, 199, 0.15); color: #0284c7; display: flex; align-items: center; justify-content: center; font-size: 13px;">
+              <i class="fa-solid fa-basket-shopping"></i>
+            </div>
+            <div>
+              <strong style="font-size: 13px; color: var(--text-main); display: block;">Vente Produit certifié Zaïre-Market</strong>
+              <small style="color: var(--text-muted); font-size: 11.5px;">21/11/2026 à 09:30 · Expédition Lubumbashi</small>
+            </div>
+          </div>
+          <span style="color: #0284c7; font-weight: 800; font-size: 14px;">+$85.00</span>
+        </div>
+      </div>
+    `;
+  }
+
+  // 6. Peuplement Onglet 4 : Formulaire Édition Profil
+  const dashEditName = document.getElementById("dashEditName");
+  const dashEditEmail = document.getElementById("dashEditEmail");
+  const dashEditCity = document.getElementById("dashEditCity");
+  const dashEditPhone = document.getElementById("dashEditPhone");
+
+  if (dashEditName) dashEditName.value = currentUser.name || "";
+  if (dashEditEmail) dashEditEmail.value = currentUser.email || "";
+  if (dashEditCity) dashEditCity.value = currentUser.city || "Kinshasa";
+  if (dashEditPhone) dashEditPhone.value = currentUser.phone || "+243 81 234 5678";
+
   updateUserAvatarBadges();
+}
+
+/**
+ * Gestion du basculement des onglets du tableau de bord
+ */
+function switchDashboardTab(tabId) {
+  document.querySelectorAll(".dashboard-tab-link").forEach(btn => btn.classList.remove("active"));
+  document.querySelectorAll(".dashboard-tab-pane").forEach(pane => pane.classList.remove("active"));
+
+  const targetPane = document.getElementById("dashTabPane" + tabId.charAt(0).toUpperCase() + tabId.slice(1));
+  if (targetPane) targetPane.classList.add("active");
+
+  const activeBtn = Array.from(document.querySelectorAll(".dashboard-tab-link")).find(btn => btn.getAttribute("onclick")?.includes(tabId));
+  if (activeBtn) activeBtn.classList.add("active");
+}
+
+/**
+ * Sauvegarde des informations du profil utilisateur
+ */
+function saveUserProfile(e) {
+  if (e) e.preventDefault();
+  if (!currentUser) return;
+
+  const newName = document.getElementById("dashEditName")?.value.trim();
+  const newCity = document.getElementById("dashEditCity")?.value;
+  const newPhone = document.getElementById("dashEditPhone")?.value.trim();
+
+  if (newName) currentUser.name = newName;
+  if (newCity) currentUser.city = newCity;
+  if (newPhone) currentUser.phone = newPhone;
+
+  saveData("zm_currentUser", currentUser);
+
+  // Mettre à jour dans la liste des utilisateurs
+  const uIdx = users.findIndex(u => u.email === currentUser.email);
+  if (uIdx !== -1) {
+    users[uIdx] = { ...users[uIdx], ...currentUser };
+    saveData("zm_users", users);
+  }
+
+  displayAccount();
+  showToast("Profil et coordonnées enregistrés avec succès !", "success");
+}
+
+/**
+ * Rechargement du portefeuille Mobile Money
+ */
+function rechargeWalletPrompt() {
+  const amountStr = prompt("Montant à recharger en dollars ($ USD) :", "50");
+  if (!amountStr) return;
+  const amount = parseFloat(amountStr);
+  if (isNaN(amount) || amount <= 0) {
+    showToast("Montant invalide.", "error");
+    return;
+  }
+
+  let currentBal = parseFloat(loadData("zm_wallet_balance", 480.00));
+  currentBal += amount;
+  saveData("zm_wallet_balance", currentBal);
+  displayAccount();
+  showToast(`Dépôt Mobile Money de $${amount.toFixed(2)} effectué avec succès !`, "success");
+}
+
+/**
+ * Retrait vers Mobile Money
+ */
+function withdrawWalletPrompt() {
+  let currentBal = parseFloat(loadData("zm_wallet_balance", 480.00));
+  const amountStr = prompt(`Montant à retirer vers Mobile Money (Solde dispo: $${currentBal.toFixed(2)}) :`, "20");
+  if (!amountStr) return;
+  const amount = parseFloat(amountStr);
+  if (isNaN(amount) || amount <= 0) {
+    showToast("Montant invalide.", "error");
+    return;
+  }
+  if (amount > currentBal) {
+    showToast("Solde insuffisant.", "error");
+    return;
+  }
+
+  currentBal -= amount;
+  saveData("zm_wallet_balance", currentBal);
+  displayAccount();
+  showToast(`Retrait de $${amount.toFixed(2)} transféré vers votre numéro Mobile Money !`, "success");
 }
 
 /**

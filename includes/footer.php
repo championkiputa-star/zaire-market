@@ -47,7 +47,7 @@
 <script src="assets/js/cart.js?v=2026.22"></script>
 <script src="assets/js/products.js?v=2026.22"></script>
 <script src="assets/js/categories.js?v=2026.22"></script>
-<script src="assets/js/auth.js?v=2026.22"></script>
+<script src="assets/js/auth.js?v=2026.24"></script>
 <script src="assets/js/admin-dashboard.js?v=2026.22"></script>
 <script src="assets/js/app.js?v=2026.22"></script>
 

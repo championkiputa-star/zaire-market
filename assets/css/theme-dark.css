@@ -357,6 +357,26 @@
   border-color: #475569 !important;
 }
 
+/* Dashboard Sombre */
+[data-theme="dark"] .dashboard-kpi-card {
+  background: #131b2e !important;
+  border-color: #1e293b !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="dark"] .dashboard-kpi-card:hover {
+  border-color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .dashboard-tab-link {
+  color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .dashboard-tab-link.active {
+  color: #38bdf8 !important;
+  border-bottom-color: #38bdf8 !important;
+}
+
 [data-theme="dark"] .form-header h1,
 [data-theme="dark"] .form-header h2,
 [data-theme="dark"] .auth-wrapper h1,

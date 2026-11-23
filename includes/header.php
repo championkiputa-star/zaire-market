@@ -54,9 +54,9 @@
   <link rel="stylesheet" href="assets/css/header-nav.css?v=2026.23">
   <link rel="stylesheet" href="assets/css/categories.css?v=2026.17">
   <link rel="stylesheet" href="assets/css/products.css?v=2026.17">
-  <link rel="stylesheet" href="assets/css/cart-checkout.css?v=2026.17">
+  <link rel="stylesheet" href="assets/css/cart-checkout.css?v=2026.24">
   <link rel="stylesheet" href="assets/css/admin.css?v=2026.17">
-  <link rel="stylesheet" href="assets/css/theme-dark.css?v=2026.23">
+  <link rel="stylesheet" href="assets/css/theme-dark.css?v=2026.24">
 
   <!-- Favicon Officiel Zaïre Visionnaire -->
   <link rel="icon" type="image/jpeg" href="assets/images/logo.jpg">
