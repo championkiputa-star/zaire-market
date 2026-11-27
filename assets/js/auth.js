@@ -388,36 +388,27 @@ function loginWithGoogle() {
             <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z"/>
           </svg>
           <h3 style="font-size: 18px; font-weight: 700; color: var(--text-main); margin-bottom: 4px;">Continuer avec Google</h3>
-          <p style="font-size: 12.5px; color: var(--text-muted);">Sélectionnez votre compte pour accéder à Zaïre-Market</p>
+          <p style="font-size: 12.5px; color: var(--text-muted);">Connectez-vous avec votre compte personnel Google pour accéder à la marketplace</p>
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
-          <button type="button" onclick="completeGoogleAuth('Shams Cherubin', 'shamscherubin@gmail.com', 'super_admin')" class="btn" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: rgba(2, 132, 199, 0.08); border: 1px solid rgba(2, 132, 199, 0.25); border-radius: 10px; text-align: left; width: 100%;">
-            <div style="width: 38px; height: 38px; border-radius: 50%; background: #0f172a; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">SC</div>
-            <div style="flex: 1; min-width: 0;">
-              <strong style="display: block; font-size: 13.5px; color: var(--text-main);">Shams Cherubin <span style="font-size: 10px; background: #dc2626; color: #fff; padding: 1px 6px; border-radius: 10px; font-weight: 800;">Super-Admin</span></strong>
-              <small style="color: var(--text-muted); font-size: 11.5px;">shamscherubin@gmail.com</small>
-            </div>
-          </button>
-
-          <button type="button" onclick="completeGoogleAuth('Dieudonné Kabange', 'kabange.dieu@gmail.com', 'client')" class="btn" style="display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--border-subtle); border: 1px solid var(--border-light); border-radius: 10px; text-align: left; width: 100%;">
-            <div style="width: 38px; height: 38px; border-radius: 50%; background: #0284c7; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">DK</div>
-            <div style="flex: 1; min-width: 0;">
-              <strong style="display: block; font-size: 13.5px; color: var(--text-main);">Dieudonné Kabange</strong>
-              <small style="color: var(--text-muted); font-size: 11.5px;">kabange.dieu@gmail.com</small>
-            </div>
-          </button>
-        </div>
-
-        <div class="auth-divider" style="margin: 14px 0 12px 0;">
-          <span>ou saisir une autre adresse Gmail</span>
+        <div style="background: rgba(2, 132, 199, 0.08); border: 1px solid rgba(2, 132, 199, 0.2); border-radius: 10px; padding: 12px; margin-bottom: 16px;">
+          <small style="color: var(--accent-blue); font-weight: 600; display: block; margin-bottom: 2px;">
+            <i class="fa-solid fa-shield-halved"></i> Connexion Client Sécurisée
+          </small>
+          <small style="color: var(--text-muted); font-size: 11.5px;">
+            Votre compte client Zaïre-Market sera instantanément synchronisé avec votre adresse Google.
+          </small>
         </div>
 
         <div style="margin-bottom: 16px;">
-          <input type="email" id="customGoogleEmail" placeholder="votre-compte@gmail.com" class="form-control" style="font-size: 13px; padding: 10px 12px;">
-          <input type="text" id="customGoogleName" placeholder="Votre nom complet (optionnel)" class="form-control" style="font-size: 13px; padding: 10px 12px; margin-top: 8px;">
-          <button type="button" onclick="submitCustomGoogleAuth()" class="btn btn-primary btn-block" style="margin-top: 10px; padding: 10px; font-size: 13px;">
-            <i class="fa-brands fa-google"></i> Valider la connexion Google
+          <label style="font-size: 12px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px;">Adresse Gmail *</label>
+          <input type="email" id="customGoogleEmail" placeholder="votre-adresse@gmail.com" class="form-control" style="font-size: 13px; padding: 10px 12px;" required>
+          
+          <label style="font-size: 12px; font-weight: 700; color: var(--text-muted); display: block; margin-top: 10px; margin-bottom: 4px;">Votre Nom complet</label>
+          <input type="text" id="customGoogleName" placeholder="Ex: Patrick Tshisekedi" class="form-control" style="font-size: 13px; padding: 10px 12px;">
+          
+          <button type="button" onclick="submitCustomGoogleAuth()" class="btn btn-primary btn-block" style="margin-top: 14px; padding: 11px; font-size: 13px;">
+            <i class="fa-brands fa-google"></i> Valider et Accéder à mon Compte
           </button>
         </div>
 
@@ -452,48 +443,59 @@ function submitCustomGoogleAuth() {
     return;
   }
 
-  const role = (email === "shamscherubin@gamil.com" || email === "shamscherubin@gmail.com") ? "super_admin" : "client";
-  completeGoogleAuth(name, email, role);
+  // SÉCURITÉ ABSOLUE : Le compte Propriétaire Super-Admin est formellement interdit via le flux Google non-mot-de-passe
+  if (email === "shamscherubin@gamil.com" || email === "shamscherubin@gmail.com") {
+    showToast("Le compte Super-Admin est ultra-sécurisé. Vous devez vous connecter via le formulaire officiel avec votre mot de passe secret.", "error");
+    closeGoogleAuthModal();
+    showLogin();
+    return;
+  }
+
+  // Tout compte Google externe est STRICTEMENT un compte client ordinaire
+  completeGoogleAuth(name, email, "client");
 }
 
 function completeGoogleAuth(name, email, role) {
   closeGoogleAuthModal();
 
-  const isSuper = (email === "shamscherubin@gamil.com" || email === "shamscherubin@gmail.com" || role === "super_admin");
+  // VERROUILLAGE TOTAL : Seul le formulaire avec mot de passe peut attribuer 'super_admin'
+  const isSuper = (email === "shamscherubin@gamil.com" || email === "shamscherubin@gmail.com");
+  if (isSuper) {
+    showToast("Accès Super-Admin refusé sans mot de passe vérifié.", "error");
+    return;
+  }
+
   currentUser = {
-    id: isSuper ? "SUPER-ADMIN-001" : ("GOOGLE-" + Date.now().toString(36)),
-    name: isSuper ? "Shams Cherubin" : name,
+    id: "GOOGLE-" + Date.now().toString(36).toUpperCase(),
+    name: name,
     email: email,
     city: "Kinshasa",
-    role: isSuper ? "super_admin" : (role || "client"),
+    role: "client", // STRICTEMENT CLIENT, JAMAIS ADMIN
     status: "active",
     provider: "google",
-    permissions: isSuper ? ["users","products","categories","orders","payments","reports","support","statistics","logs"] : [],
-    avatar: isSuper ? loadData("zm_superadmin_avatar", "assets/images/logo.jpg") : "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200"
+    permissions: [],
+    avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200"
   };
 
   saveData("zm_currentUser", currentUser);
-  logActivity(`Connexion Google certifiée : ${email} (${currentUser.role})`);
+  logActivity(`Connexion Google Client : ${email}`);
   showToast(`Connexion Google réussie ! Bienvenue ${currentUser.name}.`, "success");
   updateNavigation();
   displayAccount();
-
-  if (isAdmin()) {
-    showPage("admin");
-  } else {
-    showPage("home");
-  }
+  showPage("account");
 }
 
 /**
  * Affichage des informations du compte utilisateur
  */
 function displayAccount() {
+  const authBox = document.getElementById("authBox");
   const loggedOut = document.getElementById("loggedOut");
   const loggedIn = document.getElementById("loggedIn");
   const mainHeader = document.querySelector(".main-header");
 
   if (!currentUser) {
+    if (authBox) authBox.style.display = "";
     if (loggedOut) loggedOut.hidden = false;
     if (loggedIn) loggedIn.hidden = true;
     if (mainHeader) mainHeader.style.display = "none";
@@ -501,6 +503,7 @@ function displayAccount() {
     return;
   }
 
+  if (authBox) authBox.style.display = "none";
   if (loggedOut) loggedOut.hidden = true;
   if (loggedIn) loggedIn.hidden = false;
   if (mainHeader) mainHeader.style.display = "";
@@ -563,6 +566,46 @@ function displayAccount() {
   const kpiMyProductsCount = document.getElementById("kpiMyProductsCount");
   if (kpiMyProductsCount) {
     kpiMyProductsCount.textContent = (currentUser.role === "super_admin" || currentUser.role === "vendeur") ? (myProds.length || 6) : myProds.length;
+  }
+
+  // Badges du menu de navigation latérale
+  const menuBadgeOrders = document.getElementById("menuBadgeOrders");
+  if (menuBadgeOrders) {
+    menuBadgeOrders.textContent = (currentUser.role === "super_admin") ? (orders ? orders.length : 12) : (myOrders.length || 3);
+  }
+
+  const menuBadgeProducts = document.getElementById("menuBadgeProducts");
+  if (menuBadgeProducts) {
+    menuBadgeProducts.textContent = (currentUser.role === "super_admin" || currentUser.role === "vendeur") ? (myProds.length || 6) : myProds.length;
+  }
+
+  // Activités récentes sur l'onglet Vue d'ensemble (Overview)
+  const dashOverviewActivityList = document.getElementById("dashOverviewActivityList");
+  if (dashOverviewActivityList) {
+    const listToRender = (currentUser.role === "super_admin") ? (orders || []) : myOrders;
+    if (listToRender.length === 0) {
+      dashOverviewActivityList.innerHTML = `
+        <div style="text-align: center; padding: 18px; color: var(--text-muted); font-size: 13px;">
+          <i class="fa-solid fa-clock-rotate-left" style="font-size: 24px; color: #94a3b8; margin-bottom: 6px; display: block;"></i>
+          Aucune activité récente. Vos prochaines commandes et transactions apparaîtront ici.
+        </div>
+      `;
+    } else {
+      dashOverviewActivityList.innerHTML = listToRender.slice(0, 3).map(o => `
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: var(--border-subtle); border: 1px solid var(--border-light); border-radius: 10px; margin-bottom: 8px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="width: 32px; height: 32px; border-radius: 50%; background: rgba(2, 132, 199, 0.12); color: #0284c7; display: flex; align-items: center; justify-content: center; font-size: 13px;">
+              <i class="fa-solid fa-truck"></i>
+            </div>
+            <div>
+              <strong style="font-size: 13px; color: var(--text-main); display: block;">${escapeHTML(o.id || "CMD-2026-001")} · ${(o.items && o.items.length) || 1} article(s)</strong>
+              <small style="color: var(--text-muted); font-size: 11.5px;">Statut : <span style="color: #10b981; font-weight: 700;">${escapeHTML(o.status || "En cours de livraison")}</span></small>
+            </div>
+          </div>
+          <span style="font-weight: 800; font-size: 14px; color: var(--accent-blue);">$${parseFloat(o.total || 45.00).toFixed(2)}</span>
+        </div>
+      `).join("");
+    }
   }
 
   // 3. Peuplement Onglet 1 : Mes Commandes
@@ -675,14 +718,15 @@ function displayAccount() {
  * Gestion du basculement des onglets du tableau de bord
  */
 function switchDashboardTab(tabId) {
+  document.querySelectorAll(".dashboard-menu-item").forEach(btn => btn.classList.remove("active"));
   document.querySelectorAll(".dashboard-tab-link").forEach(btn => btn.classList.remove("active"));
   document.querySelectorAll(".dashboard-tab-pane").forEach(pane => pane.classList.remove("active"));
 
   const targetPane = document.getElementById("dashTabPane" + tabId.charAt(0).toUpperCase() + tabId.slice(1));
   if (targetPane) targetPane.classList.add("active");
 
-  const activeBtn = Array.from(document.querySelectorAll(".dashboard-tab-link")).find(btn => btn.getAttribute("onclick")?.includes(tabId));
-  if (activeBtn) activeBtn.classList.add("active");
+  const activeMenuItems = Array.from(document.querySelectorAll(".dashboard-menu-item, .dashboard-tab-link")).filter(btn => btn.getAttribute("onclick")?.includes(tabId));
+  activeMenuItems.forEach(item => item.classList.add("active"));
 }
 
 /**

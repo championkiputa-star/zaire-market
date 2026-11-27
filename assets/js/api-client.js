@@ -12,10 +12,13 @@ const ApiClient = (function() {
     const custom = localStorage.getItem("zm_api_base_url");
     if (custom) return custom;
 
-    // Contexte Web WAMP local
-    if (window.location && window.location.origin && window.location.pathname) {
-      if (window.location.pathname.includes("/zaire market/")) {
+    // Contexte Web distant (ex: Render) ou WAMP local
+    if (window.location && window.location.origin) {
+      if (window.location.pathname && window.location.pathname.includes("/zaire market/")) {
         return window.location.origin + "/zaire%20market/api";
+      }
+      if (window.location.origin.includes("onrender.com") || (window.location.origin.startsWith("http") && !window.location.origin.includes("localhost"))) {
+        return window.location.origin + "/api";
       }
     }
     // Fallback par défaut WampServer local

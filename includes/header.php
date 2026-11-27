@@ -50,13 +50,13 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Feuilles de Style Modulaires Zaïre-Market -->
-  <link rel="stylesheet" href="assets/css/style.css?v=2026.17">
+  <link rel="stylesheet" href="assets/css/style.css?v=2026.25">
   <link rel="stylesheet" href="assets/css/header-nav.css?v=2026.23">
   <link rel="stylesheet" href="assets/css/categories.css?v=2026.17">
   <link rel="stylesheet" href="assets/css/products.css?v=2026.17">
-  <link rel="stylesheet" href="assets/css/cart-checkout.css?v=2026.24">
+  <link rel="stylesheet" href="assets/css/cart-checkout.css?v=2026.25">
   <link rel="stylesheet" href="assets/css/admin.css?v=2026.17">
-  <link rel="stylesheet" href="assets/css/theme-dark.css?v=2026.24">
+  <link rel="stylesheet" href="assets/css/theme-dark.css?v=2026.25">
 
   <!-- Favicon Officiel Zaïre Visionnaire -->
   <link rel="icon" type="image/jpeg" href="assets/images/logo.jpg">

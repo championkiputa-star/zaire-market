@@ -107,48 +107,6 @@ require_once __DIR__ . '/includes/categories-modal.php';
           </button>
         </div>
       </div>
-
-      <!-- BLOC C : COCKPIT UTILISATEUR & CONFIANCE MOBILE MONEY -->
-      <div class="bento-card bento-user-cockpit">
-        <div class="cockpit-user-header">
-          <div class="cockpit-avatar-wrap">
-            <img src="assets/images/logo.jpg" alt="Avatar" class="cockpit-avatar header-user-avatar-sync">
-            <span class="cockpit-status-dot"></span>
-          </div>
-          <div class="cockpit-user-details">
-            <span class="cockpit-greeting">Bienvenue sur Zaïre-Market</span>
-            <h4 class="cockpit-username" id="cockpitUserName">Josué</h4>
-            <span class="cockpit-role-badge badge badge-category" id="cockpitUserRole">Client Marché</span>
-          </div>
-        </div>
-
-        <div class="cockpit-actions-list">
-          <button class="cockpit-action-btn" onclick="showPage('account')">
-            <span><i class="fa-solid fa-user-circle" style="color: #0284c7; margin-right: 6px;"></i> Mon Profil & Photo</span>
-            <i class="fa-solid fa-chevron-right chevron-icon"></i>
-          </button>
-          <button class="cockpit-action-btn" onclick="showPage('cart')">
-            <span><i class="fa-solid fa-cart-shopping" style="color: #f59e0b; margin-right: 6px;"></i> Mon Panier Actif</span>
-            <span class="badge badge-category cart-counter-badge" style="display: none;">0</span>
-            <i class="fa-solid fa-chevron-right chevron-icon"></i>
-          </button>
-          <button class="cockpit-action-btn highlight-sell" onclick="showPage('sell')">
-            <span><i class="fa-solid fa-cloud-arrow-up" style="color: #0284c7; margin-right: 6px;"></i> + Déposer une annonce</span>
-            <i class="fa-solid fa-chevron-right chevron-icon"></i>
-          </button>
-        </div>
-
-        <!-- Confiance Paiements RDC -->
-        <div class="cockpit-payments-box">
-          <span class="cockpit-payments-label">Règlement 100% Sécurisé RDC</span>
-          <div class="cockpit-payments-icons">
-            <span class="payment-pill pill-mpesa"><i class="fa-solid fa-mobile-screen"></i> M-Pesa</span>
-            <span class="payment-pill pill-airtel"><i class="fa-solid fa-phone"></i> Airtel</span>
-            <span class="payment-pill pill-orange"><i class="fa-solid fa-wallet"></i> Orange</span>
-            <span class="payment-pill pill-cash"><i class="fa-solid fa-money-bill-wave"></i> Cash</span>
-          </div>
-        </div>
-      </div>
     </div>
 
     <!-- ========================================================== -->
@@ -970,7 +928,7 @@ require_once __DIR__ . '/includes/categories-modal.php';
   <!-- 6. VUE MON COMPTE & AUTHENTIFICATION -->
   <!-- ========================================================== -->
   <section id="account" class="page">
-    <div class="auth-wrapper">
+    <div id="authBox" class="auth-wrapper">
       <!-- Bouton Retour au Marché (Visible quand le header est masqué) -->
       <div style="margin-bottom: 18px; text-align: left;">
         <button type="button" onclick="showPage('home')" class="btn btn-secondary btn-sm" style="display: inline-flex; align-items: center; gap: 6px; border-radius: var(--radius-full); padding: 7px 16px; font-size: 12px;">
@@ -1117,229 +1075,310 @@ require_once __DIR__ . '/includes/categories-modal.php';
       </div>
     </div>
 
-    <!-- 2. VUE CONNECTÉ : GRAND TABLEAU DE BORD MONDIAL & MODERNE -->
+    <!-- 2. VUE CONNECTÉ : GRAND TABLEAU DE BORD MONDIAL & MODERNE (PORTAL PRO) -->
     <div id="loggedIn" class="dashboard-wrapper" hidden>
-      <!-- En-tête Cockpit & Profil Dynamique -->
-      <div class="dashboard-cockpit-card">
-        <div class="dashboard-profile-left">
-          <div class="dashboard-avatar-box">
-            <img id="dashAvatarImg" src="assets/images/logo.jpg" alt="Photo Profil" class="dashboard-avatar-img">
-          </div>
-          <div>
-            <div class="dashboard-user-name">
-              <span id="dashUserName">Chargement...</span>
-              <span id="dashRoleBadge" class="dashboard-badge-role dashboard-badge-client">Client</span>
+      <!-- Ruban Topbar : Fil d'Ariane & Statut Session 26 Provinces -->
+      <div class="dashboard-top-status-bar">
+        <div class="dashboard-breadcrumb">
+          <a href="#" onclick="showPage('home'); return false;"><i class="fa-solid fa-house"></i> Zaïre-Market</a>
+          <i class="fa-solid fa-chevron-right"></i>
+          <span>Tableau de Bord &amp; Cockpit Commercial</span>
+        </div>
+        <div class="dashboard-live-indicator">
+          <span class="live-dot-pulse"></span>
+          <span>Session Sécurisée SSL • Réseau 26 Provinces</span>
+        </div>
+      </div>
+
+      <!-- Disposition Portail en 2 Colonnes -->
+      <div class="dashboard-portal-grid">
+        <!-- Colonne Gauche : Sidebar Cockpit -->
+        <aside class="dashboard-sidebar">
+          <div class="dashboard-sidebar-profile">
+            <div class="dashboard-avatar-box">
+              <img id="dashAvatarImg" src="assets/images/logo.jpg" alt="Photo Profil" class="dashboard-avatar-img">
+              <span class="cockpit-status-dot"></span>
             </div>
-            <div class="dashboard-user-meta">
-              <span><i class="fa-solid fa-envelope" style="color: #38bdf8;"></i> <span id="dashUserEmail">email@exemple.cd</span></span>
-              <span><i class="fa-solid fa-location-dot" style="color: #f59e0b;"></i> <span id="dashUserCity">Kinshasa</span></span>
-              <span><i class="fa-solid fa-id-card" style="color: #a855f7;"></i> <span id="dashUserId">ZM-001</span></span>
+            <h3 class="dashboard-sidebar-name" id="dashUserName">Chargement...</h3>
+            <span id="dashRoleBadge" class="dashboard-badge-role dashboard-badge-client">Client</span>
+            
+            <div class="dashboard-sidebar-meta">
+              <span><i class="fa-solid fa-envelope"></i> <span id="dashUserEmail">email@exemple.cd</span></span>
+              <span><i class="fa-solid fa-location-dot"></i> <span id="dashUserCity">Kinshasa</span></span>
+              <span><i class="fa-solid fa-id-card"></i> <span id="dashUserId">ZM-001</span></span>
             </div>
           </div>
-        </div>
 
-        <div class="dashboard-actions-right">
-          <!-- Bouton Console Super-Admin (Affiché uniquement pour Shams Cherubin / Admins) -->
-          <button type="button" id="dashAdminAccessBtn" onclick="showPage('admin')" class="btn titan-btn-primary" style="display: none; background: linear-gradient(135deg, #dc2626, #b91c1c); border-color: #ef4444; font-size: 13px; padding: 10px 18px;">
-            <i class="fa-solid fa-crown" style="color: #fbbf24;"></i> Console Super-Admin (11 Pôles)
-          </button>
+          <!-- Navigation Menu Vertical (Pro SaaS Style) -->
+          <nav class="dashboard-side-menu">
+            <button type="button" class="dashboard-menu-item active" onclick="switchDashboardTab('overview')">
+              <i class="fa-solid fa-chart-pie"></i>
+              <span>Vue d'ensemble</span>
+            </button>
+            <button type="button" class="dashboard-menu-item" onclick="switchDashboardTab('orders')">
+              <i class="fa-solid fa-truck-ramp-box"></i>
+              <span>Mes Commandes</span>
+              <span class="dashboard-menu-badge" id="menuBadgeOrders">0</span>
+            </button>
+            <button type="button" class="dashboard-menu-item" onclick="switchDashboardTab('products')">
+              <i class="fa-solid fa-boxes-packing"></i>
+              <span>Ma Boutique &amp; Stocks</span>
+              <span class="dashboard-menu-badge" id="menuBadgeProducts">0</span>
+            </button>
+            <button type="button" class="dashboard-menu-item" onclick="switchDashboardTab('wallet')">
+              <i class="fa-solid fa-wallet"></i>
+              <span>Portefeuille Mobile Money</span>
+            </button>
+            <button type="button" class="dashboard-menu-item" onclick="switchDashboardTab('profile')">
+              <i class="fa-solid fa-user-gear"></i>
+              <span>Paramètres &amp; Profil</span>
+            </button>
+          </nav>
 
-          <!-- Bouton Vendre -->
-          <button type="button" onclick="showPage('sell')" class="btn titan-btn-primary" style="font-size: 13px; padding: 10px 18px;">
-            <i class="fa-solid fa-circle-plus"></i> + Vendre un Produit
-          </button>
+          <!-- Raccourcis Administratifs & Déconnexion -->
+          <div class="dashboard-sidebar-footer">
+            <button type="button" id="dashAdminAccessBtn" onclick="showPage('admin')" class="btn titan-btn-primary btn-block" style="display: none; background: linear-gradient(135deg, #dc2626, #b91c1c); border-color: #ef4444; font-size: 12.5px; padding: 10px 14px;">
+              <i class="fa-solid fa-crown" style="color: #fbbf24;"></i> Console Super-Admin (11 Pôles)
+            </button>
 
-          <!-- Déconnexion -->
-          <button type="button" onclick="logout()" class="btn btn-secondary btn-sm" style="padding: 10px 14px; font-size: 13px; color: #f87171; border-color: rgba(239, 68, 68, 0.3);">
-            <i class="fa-solid fa-power-off"></i> Déconnexion
-          </button>
-        </div>
-      </div>
+            <button type="button" onclick="showPage('sell')" class="btn titan-btn-glass btn-block" style="font-size: 12.5px; padding: 10px 14px;">
+              <i class="fa-solid fa-circle-plus"></i> + Vendre un Produit
+            </button>
 
-      <!-- 4 KPIs Stratégiques -->
-      <div class="dashboard-kpi-grid">
-        <div class="dashboard-kpi-card">
-          <div class="dashboard-kpi-icon" style="background: rgba(16, 185, 129, 0.12); color: #10b981;">
-            <i class="fa-solid fa-wallet"></i>
+            <button type="button" onclick="logout()" class="btn btn-secondary btn-block btn-sm" style="color: #f87171; border-color: rgba(239, 68, 68, 0.3); font-size: 12px; padding: 9px;">
+              <i class="fa-solid fa-power-off"></i> Déconnexion
+            </button>
           </div>
-          <div>
-            <div class="dashboard-kpi-val" id="kpiWalletBalance">$480.00</div>
-            <div class="dashboard-kpi-label">Solde Mobile Money</div>
-          </div>
-        </div>
+        </aside>
 
-        <div class="dashboard-kpi-card">
-          <div class="dashboard-kpi-icon" style="background: rgba(2, 132, 199, 0.12); color: #0284c7;">
-            <i class="fa-solid fa-box-open"></i>
-          </div>
-          <div>
-            <div class="dashboard-kpi-val" id="kpiTotalOrders">0</div>
-            <div class="dashboard-kpi-label">Commandes Récentes</div>
-          </div>
-        </div>
+        <!-- Colonne Droite : Espace de Travail & Panneaux Métiers -->
+        <div class="dashboard-main-view">
+          <!-- Panneau 1 : Vue d'ensemble (Overview) -->
+          <div id="dashTabPaneOverview" class="dashboard-tab-pane active">
+            <!-- 4 KPIs Stratégiques Bento -->
+            <div class="dashboard-kpi-grid">
+              <div class="dashboard-kpi-card">
+                <div class="dashboard-kpi-icon" style="background: rgba(16, 185, 129, 0.12); color: #10b981;">
+                  <i class="fa-solid fa-wallet"></i>
+                </div>
+                <div>
+                  <div class="dashboard-kpi-val" id="kpiWalletBalance">$480.00</div>
+                  <div class="dashboard-kpi-label">Solde Mobile Money</div>
+                </div>
+              </div>
 
-        <div class="dashboard-kpi-card">
-          <div class="dashboard-kpi-icon" style="background: rgba(245, 158, 11, 0.12); color: #f59e0b;">
-            <i class="fa-solid fa-shop"></i>
-          </div>
-          <div>
-            <div class="dashboard-kpi-val" id="kpiMyProductsCount">0</div>
-            <div class="dashboard-kpi-label">Articles en Ligne</div>
-          </div>
-        </div>
+              <div class="dashboard-kpi-card">
+                <div class="dashboard-kpi-icon" style="background: rgba(2, 132, 199, 0.12); color: #0284c7;">
+                  <i class="fa-solid fa-box-open"></i>
+                </div>
+                <div>
+                  <div class="dashboard-kpi-val" id="kpiTotalOrders">0</div>
+                  <div class="dashboard-kpi-label">Commandes Récentes</div>
+                </div>
+              </div>
 
-        <div class="dashboard-kpi-card">
-          <div class="dashboard-kpi-icon" style="background: rgba(168, 85, 247, 0.12); color: #a855f7;">
-            <i class="fa-solid fa-shield-check"></i>
-          </div>
-          <div>
-            <div class="dashboard-kpi-val">100%</div>
-            <div class="dashboard-kpi-label">Compte RDC Certifié</div>
-          </div>
-        </div>
-      </div>
+              <div class="dashboard-kpi-card">
+                <div class="dashboard-kpi-icon" style="background: rgba(245, 158, 11, 0.12); color: #f59e0b;">
+                  <i class="fa-solid fa-shop"></i>
+                </div>
+                <div>
+                  <div class="dashboard-kpi-val" id="kpiMyProductsCount">0</div>
+                  <div class="dashboard-kpi-label">Articles en Ligne</div>
+                </div>
+              </div>
 
-      <!-- Navigation par Onglets Métiers -->
-      <div class="dashboard-nav-tabs">
-        <button type="button" class="dashboard-tab-link active" onclick="switchDashboardTab('orders')">
-          <i class="fa-solid fa-truck-ramp-box"></i> Mes Commandes & Suivi
-        </button>
-        <button type="button" class="dashboard-tab-link" onclick="switchDashboardTab('products')">
-          <i class="fa-solid fa-boxes-packing"></i> Ma Boutique & Annonces
-        </button>
-        <button type="button" class="dashboard-tab-link" onclick="switchDashboardTab('wallet')">
-          <i class="fa-solid fa-money-bill-transfer"></i> Portefeuille & Mobile Money
-        </button>
-        <button type="button" class="dashboard-tab-link" onclick="switchDashboardTab('profile')">
-          <i class="fa-solid fa-user-gear"></i> Mon Profil & Coordonnées
-        </button>
-      </div>
+              <div class="dashboard-kpi-card">
+                <div class="dashboard-kpi-icon" style="background: rgba(168, 85, 247, 0.12); color: #a855f7;">
+                  <i class="fa-solid fa-shield-check"></i>
+                </div>
+                <div>
+                  <div class="dashboard-kpi-val">100%</div>
+                  <div class="dashboard-kpi-label">Compte RDC Certifié</div>
+                </div>
+              </div>
+            </div>
 
-      <!-- Contenu des Onglets -->
-      <div class="dashboard-tab-content">
-        <!-- Onglet 1 : Commandes & Suivi -->
-        <div id="dashTabPaneOrders" class="dashboard-tab-pane active">
-          <div class="bento-card" style="padding: 24px;">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 10px;">
-              <h3 style="font-size: 17px; font-weight: 800; color: var(--text-main); margin: 0;">
-                <i class="fa-solid fa-receipt" style="color: #0284c7;"></i> Historique de mes commandes & expéditions
+            <!-- Grille Bento Raccourcis d'actions Pro -->
+            <div class="dashboard-quick-actions-grid">
+              <div class="dashboard-action-tile" onclick="showPage('products')">
+                <div class="action-tile-icon" style="background: rgba(2, 132, 199, 0.12); color: #0284c7;">
+                  <i class="fa-solid fa-bag-shopping"></i>
+                </div>
+                <div>
+                  <strong>Parcourir le Marché</strong>
+                  <small>Explorer les 28 rayons et commander</small>
+                </div>
+              </div>
+
+              <div class="dashboard-action-tile" onclick="showPage('sell')">
+                <div class="action-tile-icon" style="background: rgba(16, 185, 129, 0.12); color: #10b981;">
+                  <i class="fa-solid fa-circle-plus"></i>
+                </div>
+                <div>
+                  <strong>Vendre un Article</strong>
+                  <small>Publier une annonce visible partout en RDC</small>
+                </div>
+              </div>
+
+              <div class="dashboard-action-tile" onclick="switchDashboardTab('wallet')">
+                <div class="action-tile-icon" style="background: rgba(245, 158, 11, 0.12); color: #f59e0b;">
+                  <i class="fa-solid fa-money-bill-transfer"></i>
+                </div>
+                <div>
+                  <strong>Solde Mobile Money</strong>
+                  <small>Recharger ou retirer (M-Pesa, Airtel, Orange)</small>
+                </div>
+              </div>
+
+              <div class="dashboard-action-tile" onclick="switchDashboardTab('orders')">
+                <div class="action-tile-icon" style="background: rgba(168, 85, 247, 0.12); color: #a855f7;">
+                  <i class="fa-solid fa-truck-fast"></i>
+                </div>
+                <div>
+                  <strong>Suivi des Colis</strong>
+                  <small>Suivre l'acheminement de vos commandes</small>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dernières Activités Récentes -->
+            <div class="dashboard-recent-activity-card">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                <h4 style="margin: 0; font-size: 15px; font-weight: 800; color: var(--text-main);">
+                  <i class="fa-solid fa-clock-rotate-left" style="color: var(--accent-blue);"></i> Activité &amp; Suivis Récents
+                </h4>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="switchDashboardTab('orders')" style="font-size: 11.5px; padding: 4px 10px;">
+                  Voir tout l'historique
+                </button>
+              </div>
+              <div id="dashOverviewActivityList"></div>
+            </div>
+          </div>
+
+          <!-- Panneau 2 : Mes Commandes & Suivi -->
+          <div id="dashTabPaneOrders" class="dashboard-tab-pane">
+            <div class="bento-card" style="padding: 24px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 10px;">
+                <h3 style="font-size: 17px; font-weight: 800; color: var(--text-main); margin: 0;">
+                  <i class="fa-solid fa-receipt" style="color: #0284c7;"></i> Historique de mes commandes &amp; expéditions
+                </h3>
+                <button type="button" onclick="showPage('products')" class="btn btn-primary btn-sm">
+                  <i class="fa-solid fa-basket-shopping"></i> Faire de nouveaux achats
+                </button>
+              </div>
+              <div id="userOrdersList"></div>
+            </div>
+          </div>
+
+          <!-- Panneau 3 : Ma Boutique & Mes Annonces -->
+          <div id="dashTabPaneProducts" class="dashboard-tab-pane">
+            <div class="bento-card" style="padding: 24px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 10px;">
+                <div>
+                  <h3 style="font-size: 17px; font-weight: 800; color: var(--text-main); margin: 0;">
+                    <i class="fa-solid fa-store" style="color: #f59e0b;"></i> Mes Annonces &amp; Produits Publiés
+                  </h3>
+                  <small style="color: var(--text-muted);">Gérez vos stocks et publications visibles sur toute la RDC.</small>
+                </div>
+                <button type="button" onclick="showPage('sell')" class="btn btn-primary btn-sm">
+                  <i class="fa-solid fa-plus"></i> Déposer un nouvel article
+                </button>
+              </div>
+              <div id="dashMyProductsList"></div>
+            </div>
+          </div>
+
+          <!-- Panneau 4 : Portefeuille & Mobile Money -->
+          <div id="dashTabPaneWallet" class="dashboard-tab-pane">
+            <div class="bento-card" style="padding: 24px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+                <div>
+                  <h3 style="font-size: 17px; font-weight: 800; color: var(--text-main); margin: 0;">
+                    <i class="fa-solid fa-wallet" style="color: #10b981;"></i> Portefeuille Numérique Zaïre-Pay
+                  </h3>
+                  <small style="color: var(--text-muted);">Compatible avec tous les opérateurs mobiles en RDC.</small>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                  <button type="button" onclick="rechargeWalletPrompt()" class="btn btn-primary btn-sm">
+                    <i class="fa-solid fa-arrow-down"></i> Recharger (Dépôt)
+                  </button>
+                  <button type="button" onclick="withdrawWalletPrompt()" class="btn btn-secondary btn-sm">
+                    <i class="fa-solid fa-arrow-up"></i> Retirer vers Mobile Money
+                  </button>
+                </div>
+              </div>
+
+              <!-- Grille des opérateurs connectés -->
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 24px;">
+                <div style="padding: 16px; border-radius: 12px; background: rgba(220, 38, 38, 0.08); border: 1px solid rgba(220, 38, 38, 0.25);">
+                  <strong style="color: #dc2626; display: flex; align-items: center; gap: 8px; font-size: 14px;">
+                    <i class="fa-solid fa-mobile-screen"></i> M-Pesa (Vodacom)
+                  </strong>
+                  <span style="display: block; font-size: 12px; color: var(--text-muted); margin-top: 4px;">Connecté · Instantané 24/7</span>
+                  <span style="display: block; font-weight: 800; font-size: 16px; color: var(--text-main); margin-top: 8px;">Prêt aux paiements</span>
+                </div>
+
+                <div style="padding: 16px; border-radius: 12px; background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25);">
+                  <strong style="color: #ef4444; display: flex; align-items: center; gap: 8px; font-size: 14px;">
+                    <i class="fa-solid fa-signal"></i> Airtel Money
+                  </strong>
+                  <span style="display: block; font-size: 12px; color: var(--text-muted); margin-top: 4px;">Connecté · Toutes provinces</span>
+                  <span style="display: block; font-weight: 800; font-size: 16px; color: var(--text-main); margin-top: 8px;">Prêt aux paiements</span>
+                </div>
+
+                <div style="padding: 16px; border-radius: 12px; background: rgba(249, 115, 22, 0.08); border: 1px solid rgba(249, 115, 22, 0.25);">
+                  <strong style="color: #f97316; display: flex; align-items: center; gap: 8px; font-size: 14px;">
+                    <i class="fa-solid fa-tower-broadcast"></i> Orange Money
+                  </strong>
+                  <span style="display: block; font-size: 12px; color: var(--text-muted); margin-top: 4px;">Connecté · Sécurisé</span>
+                  <span style="display: block; font-weight: 800; font-size: 16px; color: var(--text-main); margin-top: 8px;">Prêt aux paiements</span>
+                </div>
+              </div>
+
+              <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 12px; color: var(--text-main);">Dernières transactions financières</h4>
+              <div id="dashWalletTransactions"></div>
+            </div>
+          </div>
+
+          <!-- Panneau 5 : Mon Profil & Coordonnées -->
+          <div id="dashTabPaneProfile" class="dashboard-tab-pane">
+            <div class="bento-card" style="padding: 24px;">
+              <h3 style="font-size: 17px; font-weight: 800; color: var(--text-main); margin-bottom: 18px;">
+                <i class="fa-solid fa-id-card-clip" style="color: #a855f7;"></i> Mes Informations Personnelles &amp; Ville de Livraison
               </h3>
-              <button type="button" onclick="showPage('products')" class="btn btn-primary btn-sm">
-                <i class="fa-solid fa-basket-shopping"></i> Faire de nouveaux achats
-              </button>
-            </div>
-            <div id="userOrdersList"></div>
-          </div>
-        </div>
-
-        <!-- Onglet 2 : Ma Boutique & Mes Annonces -->
-        <div id="dashTabPaneProducts" class="dashboard-tab-pane">
-          <div class="bento-card" style="padding: 24px;">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 10px;">
-              <div>
-                <h3 style="font-size: 17px; font-weight: 800; color: var(--text-main); margin: 0;">
-                  <i class="fa-solid fa-store" style="color: #f59e0b;"></i> Mes Annonces & Produits Publiés
-                </h3>
-                <small style="color: var(--text-muted);">Gérez vos stocks et publications visibles sur toute la RDC.</small>
-              </div>
-              <button type="button" onclick="showPage('sell')" class="btn btn-primary btn-sm">
-                <i class="fa-solid fa-plus"></i> Déposer un nouvel article
-              </button>
-            </div>
-            <div id="dashMyProductsList"></div>
-          </div>
-        </div>
-
-        <!-- Onglet 3 : Portefeuille & Mobile Money -->
-        <div id="dashTabPaneWallet" class="dashboard-tab-pane">
-          <div class="bento-card" style="padding: 24px;">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
-              <div>
-                <h3 style="font-size: 17px; font-weight: 800; color: var(--text-main); margin: 0;">
-                  <i class="fa-solid fa-wallet" style="color: #10b981;"></i> Portefeuille Numérique Zaïre-Pay
-                </h3>
-                <small style="color: var(--text-muted);">Compatible avec tous les opérateurs mobiles en RDC.</small>
-              </div>
-              <div style="display: flex; gap: 8px;">
-                <button type="button" onclick="rechargeWalletPrompt()" class="btn btn-primary btn-sm">
-                  <i class="fa-solid fa-arrow-down"></i> Recharger (Dépôt)
+              <form id="dashUpdateProfileForm" onsubmit="saveUserProfile(event)">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 16px;">
+                  <div class="form-group">
+                    <label>Nom Complet *</label>
+                    <input type="text" id="dashEditName" class="form-control" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Adresse Email *</label>
+                    <input type="email" id="dashEditEmail" class="form-control" disabled style="opacity: 0.7;">
+                  </div>
+                  <div class="form-group">
+                    <label>Ville de Résidence (RDC) *</label>
+                    <select id="dashEditCity" class="form-control">
+                      <option value="Kinshasa">Kinshasa</option>
+                      <option value="Lubumbashi">Lubumbashi</option>
+                      <option value="Goma">Goma</option>
+                      <option value="Bukavu">Bukavu</option>
+                      <option value="Kisangani">Kisangani</option>
+                      <option value="Kolwezi">Kolwezi</option>
+                      <option value="Matadi">Matadi</option>
+                      <option value="Autre Ville">Autre Province RDC</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Numéro Téléphone / WhatsApp</label>
+                    <input type="text" id="dashEditPhone" class="form-control" placeholder="+243 81 000 0000">
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="padding: 10px 20px;">
+                  <i class="fa-solid fa-floppy-disk"></i> Enregistrer les modifications
                 </button>
-                <button type="button" onclick="withdrawWalletPrompt()" class="btn btn-secondary btn-sm">
-                  <i class="fa-solid fa-arrow-up"></i> Retirer vers Mobile Money
-                </button>
-              </div>
+              </form>
             </div>
-
-            <!-- Grille des opérateurs connectés -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 24px;">
-              <div style="padding: 16px; border-radius: 12px; background: rgba(220, 38, 38, 0.08); border: 1px solid rgba(220, 38, 38, 0.25);">
-                <strong style="color: #dc2626; display: flex; align-items: center; gap: 8px; font-size: 14px;">
-                  <i class="fa-solid fa-mobile-screen"></i> M-Pesa (Vodacom)
-                </strong>
-                <span style="display: block; font-size: 12px; color: var(--text-muted); margin-top: 4px;">Connecté · Instantané 24/7</span>
-                <span style="display: block; font-weight: 800; font-size: 16px; color: var(--text-main); margin-top: 8px;">Prêt aux paiements</span>
-              </div>
-
-              <div style="padding: 16px; border-radius: 12px; background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.25);">
-                <strong style="color: #ef4444; display: flex; align-items: center; gap: 8px; font-size: 14px;">
-                  <i class="fa-solid fa-signal"></i> Airtel Money
-                </strong>
-                <span style="display: block; font-size: 12px; color: var(--text-muted); margin-top: 4px;">Connecté · Toutes provinces</span>
-                <span style="display: block; font-weight: 800; font-size: 16px; color: var(--text-main); margin-top: 8px;">Prêt aux paiements</span>
-              </div>
-
-              <div style="padding: 16px; border-radius: 12px; background: rgba(249, 115, 22, 0.08); border: 1px solid rgba(249, 115, 22, 0.25);">
-                <strong style="color: #f97316; display: flex; align-items: center; gap: 8px; font-size: 14px;">
-                  <i class="fa-solid fa-tower-broadcast"></i> Orange Money
-                </strong>
-                <span style="display: block; font-size: 12px; color: var(--text-muted); margin-top: 4px;">Connecté · Sécurisé</span>
-                <span style="display: block; font-weight: 800; font-size: 16px; color: var(--text-main); margin-top: 8px;">Prêt aux paiements</span>
-              </div>
-            </div>
-
-            <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 12px; color: var(--text-main);">Dernières transactions financières</h4>
-            <div id="dashWalletTransactions"></div>
-          </div>
-        </div>
-
-        <!-- Onglet 4 : Mon Profil & Coordonnées -->
-        <div id="dashTabPaneProfile" class="dashboard-tab-pane">
-          <div class="bento-card" style="padding: 24px;">
-            <h3 style="font-size: 17px; font-weight: 800; color: var(--text-main); margin-bottom: 18px;">
-              <i class="fa-solid fa-id-card-clip" style="color: #a855f7;"></i> Mes Informations Personnelles & Ville de Livraison
-            </h3>
-            <form id="dashUpdateProfileForm" onsubmit="saveUserProfile(event)">
-              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 16px;">
-                <div class="form-group">
-                  <label>Nom Complet *</label>
-                  <input type="text" id="dashEditName" class="form-control" required>
-                </div>
-                <div class="form-group">
-                  <label>Adresse Email *</label>
-                  <input type="email" id="dashEditEmail" class="form-control" disabled style="opacity: 0.7;">
-                </div>
-                <div class="form-group">
-                  <label>Ville de Résidence (RDC) *</label>
-                  <select id="dashEditCity" class="form-control">
-                    <option value="Kinshasa">Kinshasa</option>
-                    <option value="Lubumbashi">Lubumbashi</option>
-                    <option value="Goma">Goma</option>
-                    <option value="Bukavu">Bukavu</option>
-                    <option value="Kisangani">Kisangani</option>
-                    <option value="Kolwezi">Kolwezi</option>
-                    <option value="Matadi">Matadi</option>
-                    <option value="Autre Ville">Autre Province RDC</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label>Numéro Téléphone / WhatsApp</label>
-                  <input type="text" id="dashEditPhone" class="form-control" placeholder="+243 81 000 0000">
-                </div>
-              </div>
-              <button type="submit" class="btn btn-primary" style="padding: 10px 20px;">
-                <i class="fa-solid fa-floppy-disk"></i> Enregistrer les modifications
-              </button>
-            </form>
           </div>
         </div>
       </div>

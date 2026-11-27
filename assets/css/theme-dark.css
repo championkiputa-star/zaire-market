@@ -820,6 +820,40 @@
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
 }
 
+[data-theme="dark"] .dashboard-top-status-bar,
+[data-theme="dark"] .dashboard-sidebar,
+[data-theme="dark"] .dashboard-recent-activity-card,
+[data-theme="dark"] .dashboard-action-tile {
+  background: #111827;
+  border-color: #1e293b;
+}
+
+[data-theme="dark"] .dashboard-sidebar-meta {
+  background: #0b0f19;
+  border-color: #1e293b;
+}
+
+[data-theme="dark"] .dashboard-menu-item:hover {
+  background: #1e293b;
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .dashboard-menu-item.active {
+  background: rgba(56, 189, 248, 0.12);
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+[data-theme="dark"] .dashboard-menu-badge {
+  background: #1e293b;
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .dashboard-menu-item.active .dashboard-menu-badge {
+  background: #0284c7;
+  color: #ffffff;
+}
+
 /* Transition fluide lors du changement de thème */
 body, .main-header, .desktop-nav, .bottom-nav, .product-card, .form-card, .auth-wrapper, .market-footer-links, .categories-drawer, .category-view-container, .sub-nav-ribbon, .titan-filter-bar, .bento-card {
   transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
